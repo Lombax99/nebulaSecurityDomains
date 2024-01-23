@@ -1,0 +1,40 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/bookworm64"
+
+  config.vm.provider "virtualbox" do |vb|
+        vb.linked_clone = true
+  end
+
+
+  config.vm.define "lighthouse" do |machine|
+    machine.vm.hostname = "lighthouse"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2222, guest: 22
+    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.1"
+  
+  end
+
+
+  config.vm.define "laptop" do |machine|
+    machine.vm.hostname = "laptop"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2224, guest: 22
+    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.5"
+  
+  end
+
+
+  config.vm.define "server" do |machine|
+    machine.vm.hostname = "server"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2226, guest: 22
+    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.9"
+  
+  end
+
+
+end
