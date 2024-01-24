@@ -12,8 +12,19 @@ Vagrant.configure("2") do |config|
     
     #fixed ssh port for staging inventory
     machine.vm.network "forwarded_port", id: "ssh", host: 2222, guest: 22
-    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.1"
-  
+    machine.vm.network "private_network",
+      virtualbox__intnet: "lighthouse-network",
+      ip: "192.168.1.10",
+      netmask: "255.255.255.0"
+
+    #define route to all other machines via router
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.2.10 via 192.168.1.1
+	 sudo ip route add 192.168.3.10 via 192.168.1.1
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+      SHELL
   end
 
 
@@ -22,8 +33,19 @@ Vagrant.configure("2") do |config|
     
     #fixed ssh port for staging inventory
     machine.vm.network "forwarded_port", id: "ssh", host: 2224, guest: 22
-    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.5"
-  
+    machine.vm.network "private_network",
+      virtualbox__intnet: "laptop-network",
+      ip: "192.168.2.10",
+      netmask: "255.255.255.0"  
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.2.1
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+      SHELL
+
   end
 
 
@@ -32,8 +54,51 @@ Vagrant.configure("2") do |config|
     
     #fixed ssh port for staging inventory
     machine.vm.network "forwarded_port", id: "ssh", host: 2226, guest: 22
-    machine.vm.network "private_network", virtualbox__intnet: "homelab-staging",ip: "192.168.100.9"
-  
+    machine.vm.network "private_network",
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.10",
+      netmask: "255.255.255.0"
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.3.1
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+      SHELL
+
+  end
+
+
+  config.vm.define "router" do |machine|
+    machine.vm.hostname = "router"                                                
+                                                                                  
+    #fixed ssh port for staging inventory                                         
+    machine.vm.network "forwarded_port", id: "ssh", host: 2228, guest: 22         
+    
+   machine.vm.network "private_network",                                         
+      virtualbox__intnet: "lighthouse-network",                                       
+      ip: "192.168.1.1",                                                          
+      netmask: "255.255.255.0"
+
+   machine.vm.network "private_network",                 
+      virtualbox__intnet: "laptop-network",              
+      ip: "192.168.2.1",                                
+      netmask: "255.255.255.0"
+
+   machine.vm.network "private_network",       
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.1",             
+      netmask: "255.255.255.0"                                                   
+
+   #enable forward ip
+   machine.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get install traceroute
+      echo -e "\nnet.ipv4.ip_forward=1" >> /etc/sysctl.conf
+    SHELL
+    machine.vm.provision :reload   
+                                                                               
   end
 
 
