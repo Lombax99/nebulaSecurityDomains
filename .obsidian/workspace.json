@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f88d75987fb3ae4a",
+            "id": "a5d9e9702f2b9b93",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Nebula security domains.md",
+                "file": "Doc/Nebula first network.md",
                 "mode": "source",
                 "source": false
               }
@@ -26,6 +26,30 @@
               "type": "markdown",
               "state": {
                 "file": "Doc/Nebula security domains.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4bb6ccf4064e44de",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sprint 1.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1cd3a3ff0580256c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Esempio 2.md",
                 "mode": "source",
                 "source": false
               }
@@ -161,19 +185,21 @@
   },
   "active": "127947656371e08c",
   "lastOpenFiles": [
-    "nebula_security_domain",
     "Doc/Nebula first network.md",
     "Doc/Nebula security domains.md",
+    "Sprint 1.md",
+    "Esempio 2.md",
+    "Vagrant/vagrant_esempio1_nebula/Vagrantfile",
+    "Vagrant/vagrant_esempio1_nebula",
+    "Vagrant/vagrant_esempio3_nebula/Vagrantfile",
+    "Vagrant/vagrant_esempio3_nebula",
+    "Vagrant/vagrant_esempio2_nebula/Vagrantfile.save",
+    "Vagrant/vagrant_nebula_project/Vagrantfile.save",
+    "Vagrant/vagrant_esempio2_nebula/Vagrantfile",
+    "Vagrant/vagrant_esempio2_nebula",
+    "tmp.md",
     "NebulaApp/config.yaml",
     "NebulaApp/config-lighthouse.yaml",
-    "NebulaApp/config (copy).yml",
-    "NebulaApp/config.yml",
-    "NebulaApp/server.crt",
-    "NebulaApp/server.key",
-    "NebulaApp/laptop.crt",
-    "NebulaApp/laptop.key",
-    "NebulaApp/lighthouse.crt",
-    "NebulaApp/lighthouse.key",
     "Doc/Vagrant setup.md"
   ]
 }

@@ -1,0 +1,209 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/bookworm64"
+
+  config.vm.provider "virtualbox" do |vb|
+        vb.linked_clone = true
+  end
+
+
+  config.vm.define "lighthouse" do |machine|
+    machine.vm.hostname = "lighthouse"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2222, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "lighthouse-network",
+      ip: "192.168.1.10",
+      netmask: "255.255.255.0"
+
+    #define route to all other machines via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.2.11   laptop1" >> /etc/hosts
+	 echo -e "192.168.2.12   laptop2" >> /etc/hosts
+	 echo -e "192.168.2.13   laptop3" >> /etc/hosts
+	 echo -e "192.168.3.11   server1" >> /etc/hosts
+	 echo -e "192.168.3.12   server2" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.2.11 via 192.168.1.1
+	 sudo ip route add 192.168.2.12 via 192.168.1.1
+	 sudo ip route add 192.168.2.13 via 192.168.1.1
+	 sudo ip route add 192.168.3.11 via 192.168.1.1
+	 sudo ip route add 192.168.3.12 via 192.168.1.1
+      SHELL
+  end
+  
+  
+  config.vm.define "laptop1" do |machine|
+    machine.vm.hostname = "laptop1"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2224, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "laptop-network",
+      ip: "192.168.2.11",
+      netmask: "255.255.255.0"  
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.2.1
+      SHELL
+
+  end
+  
+  
+    config.vm.define "laptop2" do |machine|
+    machine.vm.hostname = "laptop2"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2225, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "laptop-network",
+      ip: "192.168.2.12",
+      netmask: "255.255.255.0"  
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.2.1
+      SHELL
+
+  end
+  
+  
+    config.vm.define "laptop3" do |machine|
+    machine.vm.hostname = "laptop3"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2226, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "laptop-network",
+      ip: "192.168.2.13",
+      netmask: "255.255.255.0"  
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.2.1
+      SHELL
+
+  end
+
+
+  config.vm.define "server1" do |machine|
+    machine.vm.hostname = "server1"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2228, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.11",
+      netmask: "255.255.255.0"
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.3.1
+      SHELL
+
+  end
+
+
+  config.vm.define "server2" do |machine|
+    machine.vm.hostname = "server2"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2229, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.12",
+      netmask: "255.255.255.0"
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.3.1
+      SHELL
+
+  end
+
+
+  config.vm.define "router" do |machine|
+    machine.vm.hostname = "router"                                                
+                                                                                  
+    #fixed ssh port for staging inventory                                         
+    machine.vm.network "forwarded_port", id: "ssh", host: 2230, guest: 22         
+    
+   machine.vm.network "private_network",                                         
+      virtualbox__intnet: "lighthouse-network",                                       
+      ip: "192.168.1.1",                                                          
+      netmask: "255.255.255.0"
+
+   machine.vm.network "private_network",                 
+      virtualbox__intnet: "laptop-network",              
+      ip: "192.168.2.1",                                
+      netmask: "255.255.255.0"
+
+   machine.vm.network "private_network",       
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.1",             
+      netmask: "255.255.255.0"                                                   
+
+   #enable forward ip
+   machine.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get install traceroute
+      echo -e "\nnet.ipv4.ip_forward=1" >> /etc/sysctl.conf
+    SHELL
+    machine.vm.provision :reload   
+                                                                               
+  end
+  
+  
+  
+  
+  
+  
+end

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mv config.yaml /etc/nebula/config.yaml
+mv ca.crt /etc/nebula/ca.crt
+mv laptop.crt /etc/nebula/host.crt
+mv laptop.key /etc/nebula/host.key

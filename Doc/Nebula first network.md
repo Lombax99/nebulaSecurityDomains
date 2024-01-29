@@ -18,7 +18,7 @@ tar -xzf nebula-linux-amd64.tar.gz
 > Nebula uses AES-256-GCM encryption with Argon2id for key derivation. The default Argon2 parameters are taken from the "FIRST RECOMMENDED" suggestion in the [Argon2 RFC](https://datatracker.ietf.org/doc/rfc9106/) (1 iteration, 4 lanes parallelism, 2 GiB RAM.) To select your own parameters, use the `-argon-iterations`, `-argon-parallelism`, and `-argon-memory` CLI flags.
 
 ```
-./nebula-cert ca -name "Myorg, Inc" -encrypt
+./nebula-cert ca -name "Myorg, Inc"
 ```
 
 > [!Note] 
@@ -31,6 +31,9 @@ tar -xzf nebula-linux-amd64.tar.gz
 
 Pass `-duration XXhXXmXXs` to set a custom duration for the CA to be valid at creation, for example `-duration 17531h` would generate a CA valid for just under two years.
 
+```
+./nebula-cert print -path somecert.crt    #to see certificate
+```
 #### 2) Building the network
 ##### Creating a Keys and Certificates
 ``` sh
