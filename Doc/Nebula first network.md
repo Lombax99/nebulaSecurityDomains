@@ -138,6 +138,10 @@ firewall:
 	5) Start Nebula
     ```
     ./nebula -config /etc/nebula/config.yaml
+	
+	#or better
+	
+	sudo ./nebula -config /etc/nebula/config.yaml &> logs.txt &
     ```
 ##### Verifying it all works
 You should now be able to ping other hosts running nebula (assuming ICMP is allowed). To ping the example lighthouse, run:

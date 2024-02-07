@@ -23,7 +23,8 @@ Vagrant.configure("2") do |config|
 	 echo -e "192.168.2.11   laptop1" >> /etc/hosts
 	 echo -e "192.168.2.12   laptop2" >> /etc/hosts
 	 echo -e "192.168.2.13   laptop3" >> /etc/hosts
-	 echo -e "192.168.3.10   server" >> /etc/hosts
+	 echo -e "192.168.3.11   server1" >> /etc/hosts
+	 echo -e "192.168.3.12   server2" >> /etc/hosts
 	 mkdir /etc/nebula
       SHELL
 
@@ -33,7 +34,8 @@ Vagrant.configure("2") do |config|
 	 sudo ip route add 192.168.2.11 via 192.168.1.1
 	 sudo ip route add 192.168.2.12 via 192.168.1.1
 	 sudo ip route add 192.168.2.13 via 192.168.1.1
-	 sudo ip route add 192.168.3.10 via 192.168.1.1
+	 sudo ip route add 192.168.3.11 via 192.168.1.1
+	 sudo ip route add 192.168.3.12 via 192.168.1.1
       SHELL
   end
   
@@ -116,14 +118,40 @@ Vagrant.configure("2") do |config|
   end
 
 
-  config.vm.define "server" do |machine|
-    machine.vm.hostname = "server"
+  config.vm.define "server1" do |machine|
+    machine.vm.hostname = "server1"
     
     #fixed ssh port for staging inventory
     machine.vm.network "forwarded_port", id: "ssh", host: 2228, guest: 22
     machine.vm.network "private_network",
       virtualbox__intnet: "server-network",
-      ip: "192.168.3.10",
+      ip: "192.168.3.11",
+      netmask: "255.255.255.0"
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.3.1
+      SHELL
+
+  end
+
+
+  config.vm.define "server2" do |machine|
+    machine.vm.hostname = "server2"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2229, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "server-network",
+      ip: "192.168.3.12",
       netmask: "255.255.255.0"
 
     #define route to lighthouse via router

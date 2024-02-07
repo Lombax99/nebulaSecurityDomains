@@ -1,6 +1,0 @@
-#!/bin/bash
-
-mv config-lighthouse.yaml /etc/nebula/config.yaml
-mv ca.crt /etc/nebula/ca.crt
-mv lighthouse1.crt /etc/nebula/host.crt
-mv lighthouse1.key /etc/nebula/host.key

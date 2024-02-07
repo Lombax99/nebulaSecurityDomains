@@ -1,0 +1,16 @@
+time="2024-02-01T15:25:05Z" level=info msg="Firewall rule added" firewallRule="map[caName: caSha: direction:outgoing endPort:0 groups:[] host:any ip: localIp: proto:0 startPort:0]"
+time="2024-02-01T15:25:05Z" level=warning msg="firewall.inbound rule #0; group was an array with a single value, converting to simple value"
+time="2024-02-01T15:25:05Z" level=info msg="Firewall rule added" firewallRule="map[caName: caSha: direction:incoming endPort:0 groups:[ServerSD] host: ip: localIp: proto:0 startPort:0]"
+time="2024-02-01T15:25:05Z" level=info msg="Firewall started" firewallHashes="SHA:111ccf1ce5990bec6d5c9e48c18b003b3d6d849165c57b012dc278a4241b5e15,FNV:1411117246"
+time="2024-02-01T15:25:05Z" level=info msg="listening \"0.0.0.0\" 4242"
+time="2024-02-01T15:25:05Z" level=info msg="Main HostMap created" network=192.168.100.11/24 preferredRanges="[]"
+time="2024-02-01T15:25:05Z" level=info msg="punchy enabled"
+time="2024-02-01T15:25:05Z" level=info msg="Read relay from config" relay=192.168.100.1
+time="2024-02-01T15:25:05Z" level=info msg="Loaded send_recv_error config" sendRecvError=always
+time="2024-02-01T15:25:05Z" level=info msg="Nebula interface is active" boringcrypto=false build=1.8.2 interface=nebula1 network=192.168.100.11/24 udpAddr="0.0.0.0:4242"
+time="2024-02-01T15:25:05Z" level=info msg="Handshake message sent" handshake="map[stage:1 style:ix_psk0]" initiatorIndex=3765218511 localIndex=3765218511 remoteIndex=0 udpAddrs="[192.168.1.10:4242]" vpnIp=192.168.100.1
+time="2024-02-01T15:25:05Z" level=info msg="Handshake message received" certName=lighthouse durationNs=3645150 fingerprint=f0099ae498641c14692b51cffe516d29402fa4f2cbbae4e39d53b3280632dccb handshake="map[stage:2 style:ix_psk0]" initiatorIndex=3765218511 issuer=a10c5c68630947e647ace90f0e4e135dda26a019e54061eab6ccd8f25ef4e1ee remoteIndex=3765218511 responderIndex=2065552471 sentCachedPackets=1 udpAddr="192.168.1.10:4242" vpnIp=192.168.100.1
+time="2024-02-01T15:25:23Z" level=info msg="Handshake message received" certName=laptop2 fingerprint=0a3dbf8d1878d18ff588d432f12e40bd9b87adb3ac26dfd44cb6d9f2236280c5 handshake="map[stage:1 style:ix_psk0]" initiatorIndex=228920915 issuer=a10c5c68630947e647ace90f0e4e135dda26a019e54061eab6ccd8f25ef4e1ee remoteIndex=0 responderIndex=0 udpAddr="192.168.2.12:4242" vpnIp=192.168.100.12
+time="2024-02-01T15:25:23Z" level=info msg="Handshake message sent" certName=laptop2 fingerprint=0a3dbf8d1878d18ff588d432f12e40bd9b87adb3ac26dfd44cb6d9f2236280c5 handshake="map[stage:2 style:ix_psk0]" initiatorIndex=228920915 issuer=a10c5c68630947e647ace90f0e4e135dda26a019e54061eab6ccd8f25ef4e1ee remoteIndex=0 responderIndex=3301230129 udpAddr="192.168.2.12:4242" vpnIp=192.168.100.12
+time="2024-02-01T15:25:23Z" level=info msg=handleCreateRelayRequest initiatorRelayIndex=4139141165 relayFrom=192.168.100.12 relayTo=192.168.100.11 vpnIp=192.168.100.1
+time="2024-02-01T15:25:23Z" level=info msg="send CreateRelayResponse" initiatorRelayIndex=4139141165 relayFrom=192.168.100.12 relayTo=192.168.100.11 responderRelayIndex=691784208 vpnIp=192.168.100.1
