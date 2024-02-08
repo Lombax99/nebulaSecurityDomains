@@ -69,7 +69,7 @@ It's cool but a bit too complicated while working with a simple config file. If 
 ##### What about scalability?
 If two machines need to be able to connect to a third one but should not be able to connect to each other? 
 	- I can use the difference in rules that allow connections in an out.
-**PROBLEM CASE: Untrustfull Colleagues**
+**PROBLEM CASE: Mistrustful Colleagues**
 ##### Nebula firewall rules priority?
 If i set two rules, one allows any connection from a group and another block request from a specific host. If the host is part of the group i'd assume that the request are still blocked because a more specific rule has priority over a more general, is this the case?
 And what if a laptop is in two groups with conflicting rules, which ore takes priority?
@@ -99,10 +99,6 @@ Generare in automatico il file di config rimuoverebbe il problema (almeno in par
 ##### Does a host need the lighthouse?
 *Lighthouses allow Nebula nodes to discover the routable IP addresses of other nodes (i.e. to locate each other.) If the Nebula nodes can't connect to a shared Lighthouse, the only other way they might know where to look is if you define a [static_host_map](https://nebula.defined.net/docs/config/static-host-map/) entry for each other.* 
 Even if in very particular cases that could be remotely possible it's not a good practice and i don't think it should be implemented, it's better to add a local lighthouse if necessary. 
-### Progettazione
-##### Security domain
-We implements a security domain as a specific kind of nebula group with defined rules that block any connections from host not part of the same group.
-
 
 
 

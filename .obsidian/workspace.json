@@ -49,14 +49,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Esempio 2.md",
+                "file": "Sprint 2.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1823528ca3744395",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sprint 3 - Mistrustful colleagues.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Nebula security domains.md",
+                "file": "Sprint 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Nebula security domains.md",
+                "file": "Sprint 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Nebula security domains.md"
+                "file": "Sprint 2.md"
               }
             }
           }
@@ -183,14 +195,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "127947656371e08c",
+  "active": "1cd3a3ff0580256c",
   "lastOpenFiles": [
-    "Doc/Nebula first network.md",
     "Doc/Nebula security domains.md",
+    "Doc/Nebula first network.md",
+    "Sprint 2.md",
     "Sprint 1.md",
+    "Sprint 3 - Mistrustful colleagues.md",
     "Theory/config.yml",
     "Theory",
-    "Esempio 2.md",
     "Vagrant/vagrant_esempio1_nebula/logs.txt",
     "Vagrant/vagrant_esempio1_nebula/logslaptop1.txt",
     "Vagrant/vagrant_esempio1_nebula/logslaptop2.txt",
