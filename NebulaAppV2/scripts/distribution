@@ -1,0 +1,49 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 JSON_FILEPATH" >&2
+  exit 1
+fi
+if ! [ -e "$1" ]; then
+  echo "$1 not found" >&2
+  exit 1
+fi
+if ! [ -f "$1" ]; then
+  echo "$1 not a file" >&2
+  exit 1
+fi
+
+if ! command -v jq &> /dev/null
+then
+    echo "jq could not be found"
+    echo "i really really wanted to work with json so i need jq, pls install jq"
+    echo "to install:"
+    echo "    sudo apt update"
+    echo "    sudo apt install jq" 
+    exit 1
+fi
+
+if ! jq -e . >/dev/null 2>&1 <<<$(cat $1); then
+    echo "not a valid JSON file"
+    exit 1
+fi
+
+FILE_PATH=$1
+VAGRANT_EXAMPLE=~/Desktop/nebulaProject/Vagrant/vagrant_esempio1_nebula
+NUMBER_OF_HOST=$(jq 'length' $FILE_PATH)
+for i in $(seq 0 $((NUMBER_OF_HOST - 1)))
+do
+	HOST_NAME=$(jq ".[$i].name" $FILE_PATH | tr -d \" )
+	
+	cd $VAGRANT_EXAMPLE
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/setup-host $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/nebula $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/ca.crt $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.crt $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.key $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/config_$HOST_NAME.yaml $HOST_NAME:.
+done
+
+
+
+

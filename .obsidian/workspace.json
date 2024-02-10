@@ -67,8 +67,7 @@
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -134,7 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Sprint 2.md",
+                "file": "Doc/Nebula first network.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +150,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Sprint 2.md",
+                "file": "Doc/Nebula first network.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +173,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Sprint 2.md"
+                "file": "Doc/Nebula first network.md"
               }
             }
           }
@@ -195,23 +194,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1cd3a3ff0580256c",
+  "active": "a5d9e9702f2b9b93",
   "lastOpenFiles": [
+    "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
+    "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
+    "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
+    "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
+    "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
+    "NebulaAppV2/Test.py",
+    "NebulaAppV2/Text File.txt",
+    "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
+    "NebulaAppV2/config-default.yaml",
+    "NebulaAppV2/config-lighthouse-default.yaml",
+    "NebulaAppV2/config-host-default.yaml",
+    "Sprint 2.md",
+    "Sprint 3 - Mistrustful colleagues.md",
+    "Sprint 1.md",
     "Doc/Nebula security domains.md",
     "Doc/Nebula first network.md",
-    "Sprint 2.md",
-    "Sprint 1.md",
-    "Sprint 3 - Mistrustful colleagues.md",
-    "Theory/config.yml",
-    "Theory",
-    "Vagrant/vagrant_esempio1_nebula/logs.txt",
-    "Vagrant/vagrant_esempio1_nebula/logslaptop1.txt",
-    "Vagrant/vagrant_esempio1_nebula/logslaptop2.txt",
-    "NebulaApp/lighthouse.crt",
-    "NebulaApp/lighthouse.key",
-    "NebulaApp/config_server.yaml",
-    "NebulaApp/server.crt",
-    "NebulaApp/server.key",
     "tmp.md",
     "Doc/Vagrant setup.md"
   ]

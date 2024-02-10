@@ -1,6 +1,7 @@
 In the previous sprint we saw that using the group feature of nebula allows us to implements all the nebula security domains as needed by requirements.
 The solution implemented though, as all the first ideas, is not the best. Knowing that it's possible in this sprint we will reanalyze the project in every aspects and implement a new solution with a different case scenario:
-In this second case we will have 3 laptops, 2 servers and 1 lighthouse. We want all the laptops to be able to connect to one of the servers, the servers should be able to connect to each other but the laptops should not.
+In this second case we will have 3 laptops, 2 servers and 1 lighthouse. We want all the laptops to be able to connect to one of the servers, the servers should be able to connect to each other but the laptops should only connect to one of them.
+Aka we have a distributed server in a cluster of machines with one of them actin as gate for all the laptops.
 
 ### Analisi del problema
 
@@ -41,6 +42,8 @@ NOTA2: Gli ID degli host non devono essere necessariamente univoci per questo pr
 
 NOTA3: Per quanto sia intuitivo JSON generare in automatico il file di config rimuoverebbe il problema (almeno in parte) di un file scritto male, questo però implicherebbe avere un'applicazione per gestire la rete con GUI e tutto quanto che al momento esula dal progetto.
 ([Defined Networking's Managed Nebula](https://www.defined.net/) 👀👀)
+
+NOTA4: A questo punto mi ritrovo con due file di config, uno con i dati con gli ip e uno con i security domains, lascio che a livello di codice si gestiscano i conflitti e si assicuri che siano ben formati ma questo porta a nuovi possibili problemi, gli id devono essere corretti nei due file e devono essere definiti tutti, in compenso ho modo di fare merge dei dati delle SecDom in entrambi i file e avere entrambe le opzioni definite sopra per visualizzare la struttura della mia rete. La soluzione perfetta sarebbe abbandonare completamente la generazione manuale di questi file e passare ad un tool software per definire l'intera rete e nascondere i formati dei file salvati allìutente finale permettendogli di accedere e modificare le informazioni legate alla struttura della rete attraverso il tool.
 ##### What about the Lighthouse? Can it be part of a security domain?
 Un lighthouse ha comunque bisogno degli stessi file di ogni altro host, i punti 2, 3 e 5 del workflow sono quindi necessari anche per esso, rimane da capire se un lighthouse possa essere parte di un SecDom o meno.
 Data la natura di Nebula, ogni host (ad eccezione di casi estremamente particolari) deve potersi collegare almeno una volta ad un lighthouse per funzionare correttamente.
