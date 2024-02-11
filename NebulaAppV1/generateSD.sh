@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# check parameter, Usage: Usage: ./generateSD JSON_FILEPATH
 if [ "$#" -ne 1 ]; then
   echo "Usage: $0 JSON_FILEPATH" >&2
   exit 1
@@ -13,6 +14,9 @@ if ! [ -f "$1" ]; then
   exit 1
 fi
 
+# check if jq is installed, jq is used to read and work with JSON files
+# I could make the script install jq but that would require the script
+# to be runned with sudo permission which is not normally required
 if ! command -v jq &> /dev/null
 then
     echo "jq could not be found"
@@ -23,12 +27,14 @@ then
     exit 1
 fi
 
+# check if file is a JSON file
 if ! jq -e . >/dev/null 2>&1 <<<$(cat $1); then
     echo "not a valid JSON file"
     exit 1
 fi
 
 
+# common parameter definition
 FILE_PATH=$1
 LIGHTHOUSE_NEBULA_IP=$(jq '.[] | select(.name=="lighthouse").nebula_ip' $FILE_PATH | tr -d \" )
 LIGHTHOUSE_MACHINE_IP=$(jq '.[] | select(.name=="lighthouse").machine_ip' $FILE_PATH | tr -d \" )
@@ -46,10 +52,11 @@ do
    ./nebula-cert sign -name $HOST_NAME -ip $HOST_IP -groups "${SECURITY_DOMAINS::-1}"
 
    #step 2 - generate config file
-   sed "/static_host_map:/a\ \ \"$LIGHTHOUSE_NEBULA_IP\":\ [\"$LIGHTHOUSE_MACHINE_IP:4242\"]" config-host-default.yaml > config_$HOST_NAME.yaml
-   sed -i "/\ \ hosts:/a\ \ \ \ -\ \"$LIGHTHOUSE_NEBULA_IP\"" config_$HOST_NAME.yaml
-   sed -i "/^\ \ relays/a\ \ \ \ -\ $LIGHTHOUSE_NEBULA_IP" config_$HOST_NAME.yaml
+   sed "/static_host_map:/a\ \ \"$LIGHTHOUSE_NEBULA_IP\":\ [\"$LIGHTHOUSE_MACHINE_IP:4242\"]" config-host-default.yaml > config_$HOST_NAME.yaml		# defining "static_host_map" parameter
+   sed -i "/\ \ hosts:/a\ \ \ \ -\ \"$LIGHTHOUSE_NEBULA_IP\"" config_$HOST_NAME.yaml		# defining "hosts" parameter
+   sed -i "/^\ \ relays/a\ \ \ \ -\ $LIGHTHOUSE_NEBULA_IP" config_$HOST_NAME.yaml		# defining "relays" parameter needed for the setup
    
+   #step 3 - adding firewall rules for SecDom
    echo "  inbound:" >> config_$HOST_NAME.yaml
    jq -c ".[$i].security_domains[]" esempio1.json | tr -d \" | while read domain; 
    do
@@ -60,8 +67,7 @@ do
       echo "" >> config_$HOST_NAME.yaml
    done
 
-   #step 3 - deployment of the file in the machine
-   
+   #step 4 - deployment of the file in the machine
    cd ~/Desktop/nebulaProject/Vagrant/vagrant_esempio1_nebula
    vagrant scp ../../NebulaApp/setup-host $HOST_NAME:.
    vagrant scp ../../NebulaApp/nebula $HOST_NAME:.
@@ -72,8 +78,7 @@ do
 
 done
 
-#step 4 - deployment of file in lighhtouse
-
+#step 5 - generation and deployment of file in lighhtouse
 cd ~/Desktop/nebulaProject/NebulaApp
 ./nebula-cert sign -name "lighthouse" -ip "192.168.100.1/24"
 

@@ -32,42 +32,43 @@
             }
           },
           {
-            "id": "4bb6ccf4064e44de",
+            "id": "e9c8632bcad48225",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sprint 1.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "1cd3a3ff0580256c",
+            "id": "8d7e3b7e641509c4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sprint 2.md",
+                "file": "Doc/Sprint 1.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "1823528ca3744395",
+            "id": "2626c735e4b65e48",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sprint 3 - Mistrustful colleagues.md",
+                "file": "Doc/Sprint 2.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -117,7 +118,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "a71b57dae147cf26",
@@ -133,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Nebula first network.md",
+                "file": "Doc/Sprint 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +152,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Nebula first network.md",
+                "file": "Doc/Sprint 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Nebula first network.md"
+                "file": "Doc/Sprint 2.md"
               }
             }
           }
@@ -194,25 +196,30 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a5d9e9702f2b9b93",
+  "active": "2626c735e4b65e48",
   "lastOpenFiles": [
+    "Doc/Sprint 1.md",
+    "Doc/Nebula security domains.md",
+    "Doc/Sprint 2.md",
+    "Doc/Nebula first network.md",
+    "README.md",
+    "Doc/Resources",
+    "readme.txt",
+    "Readme.txt",
+    "Text File.txt",
+    "Doc/Vagrant setup.md",
+    "Doc/Conclusioni.md",
+    "Doc/Sprint 3 - Mistrustful colleagues.md",
+    "Sprint 1.md",
+    "Sprint 2.md",
+    "Sprint 3 - Mistrustful colleagues.md",
+    "Conclusioni.md",
     "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
     "NebulaAppV2/Test.py",
-    "NebulaAppV2/Text File.txt",
-    "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
-    "NebulaAppV2/config-default.yaml",
-    "NebulaAppV2/config-lighthouse-default.yaml",
-    "NebulaAppV2/config-host-default.yaml",
-    "Sprint 2.md",
-    "Sprint 3 - Mistrustful colleagues.md",
-    "Sprint 1.md",
-    "Doc/Nebula security domains.md",
-    "Doc/Nebula first network.md",
-    "tmp.md",
-    "Doc/Vagrant setup.md"
+    "tmp.md"
   ]
 }

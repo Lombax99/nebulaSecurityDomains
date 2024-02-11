@@ -1,10 +1,11 @@
 In the previous sprint we saw that using the group feature of nebula allows us to implements all the nebula security domains as needed by requirements.
-The solution implemented though, as all the first ideas, is not the best. Knowing that it's possible in this sprint we will reanalyze the project in every aspects and implement a new solution with a different case scenario:
-In this second case we will have 3 laptops, 2 servers and 1 lighthouse. We want all the laptops to be able to connect to one of the servers, the servers should be able to connect to each other but the laptops should only connect to one of them.
-Aka we have a distributed server in a cluster of machines with one of them actin as gate for all the laptops.
+The solution implemented though, as all the first ideas, is not the best. Knowing that it's possible in this sprint we will reanalyze the project in every aspects and implement a new solution with a different case scenario.
+
+### Test
+In this second case we will have 6 macchine di cui 3 laptops in un SecDom, 2 servers in un SecDom differente e il lighthouse. Due det tre laptop devono potersi collegare con uno solo dei server.
+We are simulating a distributed server in a cluster of machines with one of them acting as gate for some of the laptops.
 
 ### Analisi del problema
-
 ##### Single Responsibility principle
 In the previous config file we had to define on top of all the hosts and the Security Domains other data like lighthouse and hosts actual and virtual IP (although the actual IP of all the hosts was not necessary in the end... my bad), the reason being that we asked to the script to generate all certificates and key on top of the configuration files that had to then be modified. From a project point of view we asked a singe script to do everything. Let's reanalyze the process and see how to handle it better.
 The workflow of the system can be defined with the following points:
@@ -67,11 +68,6 @@ Usare uno script linux presenta diversi limiti:
 - è monolitico
 Per la nuova versione useremo un linguaggio di programmazione distribuibile su diverse piattaforme ed organizzato il più possibile a componenti.
 La mia scelta ricade su Python per facilità d'uso e familiarità.
-##### Security issues?
-Is there a way to inject modification or other forms of attacks?
-- Posso dare per scontato che il canale di trasferimento dei file sia sicuro?
-- Posso sicuramente modificare il file in un nodo manualmente...
-Questi problemi esulano dal progetto e non verranno trattati... comunque si non è sicurissimo.
 ##### Deployment of the files?
 Ogni nodo nel network deve avere:
 - una coppia chiave certificato personale

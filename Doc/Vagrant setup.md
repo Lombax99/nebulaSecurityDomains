@@ -41,6 +41,7 @@ Vagrant.configure("2") do |config|
 
 end
 ```
+
 ### Vagrant commands
 **vagrant init** -> to initialize a new project in a dir
 **vagrant up** -> starts all machines

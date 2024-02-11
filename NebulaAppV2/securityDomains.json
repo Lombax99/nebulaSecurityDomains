@@ -6,6 +6,11 @@
 
     {
         "name": "serverAccessSD",
-        "hosts": ["server1", "laptop1", "laptop2", "laptop3"]
+        "hosts": ["server1", "laptop1", "laptop2"]
+    },
+
+    {
+        "name": "laptopSD",
+        "hosts": ["laptop1", "laptop2", "laptop3"]
     }
 ]

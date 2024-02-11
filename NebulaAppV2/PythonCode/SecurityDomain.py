@@ -14,6 +14,8 @@ def merge(hostsSetupData, securityDomainsData):
     
     return hostsSetupData
 
+    #e se devo rimuovere qualcuno da un SecDom? come cambia il file con i grouppi?
+
 
 def addFirewallRules():
     pass

@@ -63,7 +63,7 @@ def generateConf(hostsSetupData):
 
             ct = CommentToken('\n\n', error.CommentMark(0), None)
             configData["firewall"]["outbound"][0].ca.items['host'] = [None, None, ct, None]
-            configData["firewall"]["inbound"] = [{'port': 'any', 'proto': 'icmp', 'host': 'any'}]
+            configData["firewall"]["inbound"] = [{'port': 'any', 'proto': 'any', 'host': 'any'}]        #connection with the lightouse is always allowed by default
 
         else:
             configData["static_host_map"] = {
@@ -84,7 +84,7 @@ def generateConf(hostsSetupData):
             configData["firewall"]["outbound"][0].ca.items['host'] = [None, None, ct, None]
             configData["firewall"]["inbound"] = []
             for group in host["groups"]:
-                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'icmp', 'group': [group]})
+                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'icmp', 'group': [group]})            #ping enabled by default in all hosts
                 #configData["firewall"]["inbound"][-1] = comments.CommentedMap(configData["firewall"]["inbound"][-1])
                 #configData["firewall"]["inbound"][-1].ca.items["group"] = [None, None, None, None]
                 #print(configData["firewall"]["inbound"][-1].ca)
