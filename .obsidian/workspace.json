@@ -66,9 +66,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f1cd2ee81abcbd4f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ToDO.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -118,8 +130,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "a71b57dae147cf26",
@@ -135,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Sprint 2.md",
+                "file": "ToDO.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Sprint 2.md",
+                "file": "ToDO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -175,16 +186,24 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Sprint 2.md"
+                "file": "ToDO.md"
               }
             }
+          },
+          {
+            "id": "10b2754810323f3e",
+            "type": "leaf",
+            "state": {
+              "type": "online.larslockefeer.obsidian-plugin-todo",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 475.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -196,11 +215,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2626c735e4b65e48",
+  "active": "f1cd2ee81abcbd4f",
   "lastOpenFiles": [
-    "Doc/Sprint 1.md",
-    "Doc/Nebula security domains.md",
     "Doc/Sprint 2.md",
+    "Doc/Sprint 1.md",
+    "ToDO.md",
+    "example1.json.md",
+    "Doc/Nebula security domains.md",
     "Doc/Nebula first network.md",
     "README.md",
     "Doc/Resources",

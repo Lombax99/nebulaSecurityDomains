@@ -1,10 +1,10 @@
 ### Goal
-Sviluppo di una prima versione funzionante as proof-of-concept.
-### Test
-5 macchine di cui 3 laptops in un SecDom comune, 1 server in grado di accettare richieste da uno solo dei laptop (laptop1), e il lighthouse.
-### Requisiti
-[[Nebula security domains#Requisiti|link requisiti]]
-### Analisi del problema
+Development of a first working version as proof-of-concept.
+
+### Requirements
+[[Nebula security domains#Requisiti|requirements' link]]
+
+### Problem analysis
 ##### Division in security domains?
 With the group feature i can define a group for each security domain and set the host to allow connections from the same group(s). That's exactly what i need. Everything else will need to be dropped.
 ##### Default deny 
@@ -12,212 +12,27 @@ Nebula uses a logic of default deny and add allow rules, there is no way of defi
 ##### Nebula firewall rules priority?
 All nebula rules are used to define allowed connections, order doesn't matter and there is no need for priority mechanism.
 ##### Difference between group and groups
-In nebula both "group" and "groups" can be defined, the difference is that "groups" are in AND logic and the rules apply only to hosts that have all the groups listed
+In nebula both "group" and "groups" can be defined, the difference is that "groups" are in AND logic and the rules apply only to hosts that have all the groups listed.
 ##### How to auto generate?
 For this first sprint i'll implement a simple script in bash, the goal is not to have a functional program but to see if a solution is possible and then improve on it.
 ##### What rules do we implements to block host from connecting to other host not in the same security domain?
 Nebula allows us to block a connection from being made in two ways:
 1) block the connection from leaving the node you are currently in:
 	- Possible security fault? Can be removed/modified? Can be impersonated? Can be added in a second moment?
-	- Implementato in questo modo, ogni nodo che fa parte di un SecDom non potrebbe mai iniziare una connessione con un host non facente parte di nessun SecDom, in una soluzione di questo tipo qualsiasi nodo dovrebbe far parte di un qualche SecDom inoltre ogni lighthouse dovrebbe essere parte di ogni SecDom (o abbastanza SecDom per poter parlare con ogni host definito nel network) 
+	- Implemented in this way, every node that is part of a SecDom could never initiate a connection with a host that is not part of any SecDom, in such a solution any node would have to be part of some SecDom also every lighthouse would have to be part of every SecDom (or enough SecDoms to be able to talk to every host defined in the network)
 1) block connection from outside hosts not part of the same group:
 	- This is clearly the best option of the two
-##### Formato del file di config?
-Per semplicità in questo primo sprint userò il formato JSON, ogni host sarà definito come un'oggetto in una lista con tutti i parametri necessari per generare il file di config e la coppia key certificate.
+##### Config file format?
+For simplicity in this first sprint I will use the JSON format, each host will be defined as an object in a list with all the parameters needed to generate the config file and the key certificate pair.
 ##### Previous rules
 What to do if a node has already some rules defined? All rules in nebula are made to allow connections to be made, given the requirements given if a rules allows a connection with a node that has not a common SecDom with the target should be dropped, if it allows a connections with a node that has a common SecDom instead the rules is superfluous and not needed.
 If there are previous rules those will be overwritten.
 
 ### Test
 [[Vagrant/vagrant_esempio1_nebula/Vagrantfile|Vagrantfile]]
-``` Vagrant
-Vagrant.configure("2") do |config|
+5 machines including 3 laptops in a common SecDom, 1 server that can accept requests from only one of the laptops (laptop1), and the lighthouse.
 
-  config.vm.box = "debian/bookworm64"
-
-  config.vm.provider "virtualbox" do |vb|
-        vb.linked_clone = true
-  end
-
-
-  config.vm.define "lighthouse" do |machine|
-    machine.vm.hostname = "lighthouse"
-    
-    #fixed ssh port for staging inventory
-    machine.vm.network "forwarded_port", id: "ssh", host: 2222, guest: 22
-    
-    machine.vm.network "private_network",
-      virtualbox__intnet: "lighthouse-network",
-      ip: "192.168.1.10",
-      netmask: "255.255.255.0"
-
-    #add host name to /etc/hosts
-    machine.vm.provision "shell",
-      inline: <<-SHELL
-	 echo -e "192.168.2.11   laptop1" >> /etc/hosts
-	 echo -e "192.168.2.12   laptop2" >> /etc/hosts
-	 echo -e "192.168.2.13   laptop3" >> /etc/hosts
-	 echo -e "192.168.3.10   server" >> /etc/hosts
-	 mkdir /etc/nebula
-      SHELL
-
-	#define route to all other machines via router
-    machine.vm.provision "shell",
-      run: "always",
-      inline: <<-SHELL
-	 sudo ip route add 192.168.2.11 via 192.168.1.1
-	 sudo ip route add 192.168.2.12 via 192.168.1.1
-	 sudo ip route add 192.168.2.13 via 192.168.1.1
-	 sudo ip route add 192.168.3.10 via 192.168.1.1
-      SHELL
-  end
-  
-  
-  config.vm.define "laptop1" do |machine|
-    machine.vm.hostname = "laptop1"
-    
-    #fixed ssh port for staging inventory
-    machine.vm.network "forwarded_port", id: "ssh", host: 2224, guest: 22
-    
-    machine.vm.network "private_network",
-      virtualbox__intnet: "laptop-network",
-      ip: "192.168.2.11",
-      netmask: "255.255.255.0"  
-
-    #add lighthouse name to /etc/hosts
-    machine.vm.provision "shell",
-      inline: <<-SHELL
-	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
-	 mkdir /etc/nebula
-      SHELL
-
-	#define route to lighthouse via router
-    machine.vm.provision "shell",
-      run: "always",
-      inline: <<-SHELL
-	 sudo ip route add 192.168.1.10 via 192.168.2.1
-      SHELL
-
-  end
-  
-  
-    config.vm.define "laptop2" do |machine|
-    machine.vm.hostname = "laptop2"
-    
-    #fixed ssh port for staging inventory
-    machine.vm.network "forwarded_port", id: "ssh", host: 2225, guest: 22
-    
-    machine.vm.network "private_network",
-      virtualbox__intnet: "laptop-network",
-      ip: "192.168.2.12",
-      netmask: "255.255.255.0"  
-
-    #add lighthouse name to /etc/hosts
-    machine.vm.provision "shell",
-      inline: <<-SHELL
-	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
-	 mkdir /etc/nebula
-      SHELL
-
-	#define route to lighthouse via router
-    machine.vm.provision "shell",
-      run: "always",
-      inline: <<-SHELL
-	 sudo ip route add 192.168.1.10 via 192.168.2.1
-      SHELL
-
-  end
-  
-  
-    config.vm.define "laptop3" do |machine|
-    machine.vm.hostname = "laptop3"
-    
-    #fixed ssh port for staging inventory
-    machine.vm.network "forwarded_port", id: "ssh", host: 2226, guest: 22
-    
-    machine.vm.network "private_network",
-      virtualbox__intnet: "laptop-network",
-      ip: "192.168.2.13",
-      netmask: "255.255.255.0"  
-
-	#add lighthouse name to /etc/hosts
-    machine.vm.provision "shell",
-      inline: <<-SHELL
-	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
-	 mkdir /etc/nebula
-      SHELL
-
-    #define route to lighthouse via router
-    machine.vm.provision "shell",
-      run: "always",
-      inline: <<-SHELL
-	 sudo ip route add 192.168.1.10 via 192.168.2.1
-      SHELL
-
-  end
-
-
-  config.vm.define "server" do |machine|
-    machine.vm.hostname = "server"
-    
-    #fixed ssh port for staging inventory
-    machine.vm.network "forwarded_port", id: "ssh", host: 2228, guest: 22
-    
-    machine.vm.network "private_network",
-      virtualbox__intnet: "server-network",
-      ip: "192.168.3.10",
-      netmask: "255.255.255.0"
-
-	#add lighthouse name to /etc/hosts
-    machine.vm.provision "shell",
-      inline: <<-SHELL
-	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
-	 mkdir /etc/nebula
-      SHELL
-
-    #define route to lighthouse via router
-    machine.vm.provision "shell",
-      run: "always",
-      inline: <<-SHELL
-	 sudo ip route add 192.168.1.10 via 192.168.3.1
-      SHELL
-
-  end
-
-
-  config.vm.define "router" do |machine|
-    machine.vm.hostname = "router"                                                
-    #fixed ssh port for staging inventory   
-    machine.vm.network "forwarded_port", id: "ssh", host: 2230, guest: 22         
-    
-   machine.vm.network "private_network",                                         
-      virtualbox__intnet: "lighthouse-network",     
-      ip: "192.168.1.1",                
-      netmask: "255.255.255.0"
-
-   machine.vm.network "private_network",                 
-      virtualbox__intnet: "laptop-network",              
-      ip: "192.168.2.1",                                
-      netmask: "255.255.255.0"
-
-   machine.vm.network "private_network",       
-      virtualbox__intnet: "server-network",
-      ip: "192.168.3.1",             
-      netmask: "255.255.255.0"                                                   
-
-   #enable forward ip
-   machine.vm.provision "shell", inline: <<-SHELL
-      sudo apt-get update
-      sudo apt-get install traceroute
-      echo -e "\nnet.ipv4.ip_forward=1" >> /etc/sysctl.conf
-    SHELL
-    machine.vm.provision :reload   
-       
-  end
-
-end
-```
-### Progettazione
+### Design
 In this case we need 2 security domains, one for the laptops and one for connecting to the server. One of the laptops will be part of both the security domains:
 - LaptopSD:
 	- laptop1
@@ -227,7 +42,7 @@ In this case we need 2 security domains, one for the laptops and one for connect
 	- laptop1
 	- server
 
-Il file di configurazione ([[esempio1.json]]) è definito come segue:
+The configuration file ([[esempio1.json]]) is defined as follows:
 ``` json
 [
     {
@@ -266,7 +81,7 @@ Il file di configurazione ([[esempio1.json]]) è definito come segue:
 ]
 ```
 
-[[generateSD.sh]]:
+The script [[generateSD.sh]]:
 ``` shell
 #!/bin/bash
 

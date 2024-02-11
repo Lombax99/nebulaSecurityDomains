@@ -102,6 +102,8 @@ def main():
 
     #4 generazione e modifica di tutti i file di config
     Gen.generateConf(hostsSetupData)
+    
+    # NOTE: cosa succede se voglio portare questo script in un'altra applicazione che non usa il file di conf degli host singoli?
     #SD.addFirewallRules(hostsSetupData)
 
 
