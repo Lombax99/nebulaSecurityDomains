@@ -10,8 +10,8 @@ TEST = False
 
 def checkParam():
     #a check if parameters are given correctly
-    if len(sys.argv) > 3 or len(sys.argv) < 2:
-        print("Usage: generateSD hostSetup.json [securityDomains.json]")
+    if len(sys.argv) != 3:
+        print("Usage: generateSD hostSetup.json securityDomains.json")
         exit(1) 
         
     #b check if files exists
@@ -21,6 +21,16 @@ def checkParam():
     if len(sys.argv) == 3 and not os.path.exists(sys.argv[2]):
         print(sys.argv[2] + " not found")
         exit(1)
+
+
+def checkDuplicateHost(hostsSetupData):
+    unique_host = []
+    for host in hostsSetupData:
+        if host["name"] not in unique_host:
+            unique_host.append(host["name"])
+        else:
+            return True
+    return False
 
 
 def main():
@@ -46,32 +56,26 @@ def main():
         exit(1)
 
     #c check if securityDomains file opens correctly and is a json file
-    if len(sys.argv) == 3:
-        try:
-            securityDomainsFile = open(sys.argv[2])
-            securityDomainsData = json.load(securityDomainsFile)
-        except:
-            print("Could not load " + sys.argv[2] + " properly, are you shure it's a correctly defined JSON file?")
-            exit(1)
-    
-        #d check if lighthouse is in a SecDom, in caso positivo lanciare un warning
-        try:
-            for SecDom in securityDomainsData:
-                for string in SecDom["hosts"]:
-                    if "lighthouse" in string:
-                        print()
-                        print("WARNING: a lighthouse was found in a security domain, this is not a good practice are you shure about your configuration?")
-                        print()
-                        print("Press Enter to continue execution...")
-                        input()
-                        break
-                else:
-                    continue  # only executed if the inner loop did NOT break
-                break 
-        except:
-            print("Could not parse securityDomains.json correctly")
-            print("Usage: generateSD hostSetup.json securityDomains.json")     
-            exit(1)
+    try:
+        securityDomainsFile = open(sys.argv[2])
+        securityDomainsData = json.load(securityDomainsFile)
+    except:
+        print("Could not load " + sys.argv[2] + " properly, are you shure it's a correctly defined JSON file?")
+        exit(1)
+
+    #d check if lighthouse is in a SecDom, in caso positivo lanciare un warning
+    try:
+        if SD.hasLightouse(securityDomainsData):
+            print()
+            print("WARNING: a lighthouse was found in a security domain, this is not a good practice are you shure about your configuration?")
+            print()
+            print("Press Enter to continue execution...")
+            input() 
+    except:
+        print("Could not parse securityDomains.json correctly")
+        print("Usage: generateSD hostSetup.json securityDomains.json")     
+        exit(1)
+
 
 
     #2 merging dei dati nei due file per generare un solo file di config da usare per tutto il processo
@@ -80,38 +84,51 @@ def main():
     #in questo caso per non complicarmi la vita lo farò fare ad una funzione che viene lanciata ogni volta
     #in futuro potrebbe essere utile implementare una logica che decida se lanciare questa funzione o meno
             
-    #e check for double in name of hosts (should be case insensitive?)
-        try:
-            hostsSetupData = SD.merge(hostsSetupData, securityDomainsData)
-            with open(sys.argv[1], 'w') as f:
-                json.dump(hostsSetupData, f, ensure_ascii=False, indent=4)
-        except:
-            print("Could not parse hostSetup.json correctly")
-            print("Usage: generateSD hostSetup.json securityDomains.json")
-            exit(1)
+    #e check for double in name of hosts (should be case insensitive?) and in name of SD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if SD.checkDuplicateSD(securityDomainsData):
+        print("Found duplicate SecDom in " + sys.argv[2])
+        print("SecDom name sould be unique")
+        exit(1)
+
+    if checkDuplicateHost(hostsSetupData):
+        print("Found duplicate host in " + sys.argv[1])
+        print("Host's name sould be unique")
+        exit(1)
+
+    try:
+        hostsSetupData = SD.merge(hostsSetupData, securityDomainsData)
+        with open(sys.argv[1], 'w') as f:
+            json.dump(hostsSetupData, f, ensure_ascii=False, indent=4)
+    except:
+        print("Could not parse hostSetup.json correctly")
+        print("Usage: generateSD hostSetup.json securityDomains.json")
+        exit(1)
+
 
 
     #3 generazione di key e crt per tutti gli host
-    #Gen.generateCrt(hostsSetupData)
-
-
-
-
+    Gen.generateCrt(hostsSetupData)
 
 
 
     #4 generazione e modifica di tutti i file di config
-    Gen.generateConf(hostsSetupData)
-    
+    try:
+        Gen.generateConf(hostsSetupData)
+    except:
+        print("could not find a lighthouse entry in " + sys.argv[1])
+
+
     # NOTE: cosa succede se voglio portare questo script in un'altra applicazione che non usa il file di conf degli host singoli?
-    #SD.addFirewallRules(hostsSetupData)
+    SD.addFirewallRules(securityDomainsData)
 
 
 
     #5 distribution
-    #Dist.sendFiles(sys.argv[1])
+    Dist.sendFiles(sys.argv[1])
+
 
 
 if __name__ == "__main__":
     main()
+
 

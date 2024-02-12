@@ -29,19 +29,23 @@ if ! jq -e . >/dev/null 2>&1 <<<$(cat $1); then
 fi
 
 FILE_PATH=$1
-VAGRANT_EXAMPLE=~/Desktop/nebulaProject/Vagrant/vagrant_esempio1_nebula
+VAGRANT_EXAMPLE=~/Desktop/nebulaProject/Vagrant/vagrant_esempio2_nebula
 NUMBER_OF_HOST=$(jq 'length' $FILE_PATH)
 for i in $(seq 0 $((NUMBER_OF_HOST - 1)))
 do
 	HOST_NAME=$(jq ".[$i].name" $FILE_PATH | tr -d \" )
-	
+	DIR=$PWD
 	cd $VAGRANT_EXAMPLE
-	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/setup-host $HOST_NAME:.
-	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/nebula $HOST_NAME:.
-	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/ca.crt $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/scripts/setup-host $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/scripts/nebula $HOST_NAME:.
+	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/scripts/ca.crt $HOST_NAME:.
 	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.crt $HOST_NAME:.
+	rm ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.crt
 	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.key $HOST_NAME:.
+	rm ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/$HOST_NAME.key
 	vagrant scp ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/config_$HOST_NAME.yaml $HOST_NAME:.
+	rm ~/Desktop/nebulaProject/NebulaAppV2/TmpFileGenerated/config_$HOST_NAME.yaml
+	cd $DIR
 done
 
 

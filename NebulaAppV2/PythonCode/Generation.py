@@ -22,6 +22,12 @@ def generateCrt(hostsSetupData):
 
 
 
+def getLighthouseIP(hostSetupData):
+    for host in hostSetupData:
+        if "lighthouse" in host["name"]:
+            return host["nebula_ip"][:-3]
+    raise Exception("No lighthouse found in config file")
+
 
 
 def flist(x):
@@ -31,13 +37,17 @@ def flist(x):
 
 def generateConf(hostsSetupData):
 
+    try:
+        lighthouseIP = getLighthouseIP(hostsSetupData)
+    except:
+        raise Exception("No lighthouse found in config file")
+
     for host in hostsSetupData:
         yaml=YAML()   # default, if not specfied, is 'rt' (round-trip)
         yaml.preserve_quotes = True
         yaml.default_flow_style = False
         yaml.sort_base_mapping_type_on_output = False
         yaml.indent(mapping=4, sequence=4, offset=2)
-        #yaml.default_flow_style = True
 
         try:
             configFile = open(configFilePath)
@@ -83,16 +93,18 @@ def generateConf(hostsSetupData):
             ct = CommentToken('\n\n', error.CommentMark(0), None)
             configData["firewall"]["outbound"][0].ca.items['host'] = [None, None, ct, None]
             configData["firewall"]["inbound"] = []
+            configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'icmp', 'host':'any'})    # ping enabled by default in all the hosts 
+            '''
             for group in host["groups"]:
-                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'icmp', 'group': [group]})            #ping enabled by default in all hosts
                 #configData["firewall"]["inbound"][-1] = comments.CommentedMap(configData["firewall"]["inbound"][-1])
                 #configData["firewall"]["inbound"][-1].ca.items["group"] = [None, None, None, None]
                 #print(configData["firewall"]["inbound"][-1].ca)
             CS = comments.CommentedSeq
             configData["firewall"]["inbound"] = CS(configData["firewall"]["inbound"])
             configData["firewall"]["inbound"].yaml_set_comment_before_after_key(1, before='\n')
+            '''
 
-        yaml.dump(configData, sys.stdout)
+        #yaml.dump(configData, sys.stdout)
 
 
         #save data in new file

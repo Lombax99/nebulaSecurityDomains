@@ -77,7 +77,7 @@ During the test do communications will be simulated by simple ping (ICMP) to tes
 **Caution**: for implementations of the ICMP protocol once a node connects with a second it is possible that the latter will be able to create a new connection at a later time in the opposite direction even if the network configuration would not allow it.
 
 ### Test Bed
-All tests will run on virtual machines generated through [Vagrant](https://developer.hashicorp.com/vagrant/tutorials/getting-started) running Ubuntu 12 operating system and virtualized with VirtualBox.
+All tests will run on virtual machines generated through [Vagrant](https://developer.hashicorp.com/vagrant/tutorials/getting-started) running Debian 12 (Bookworm64) operating system and virtualized with VirtualBox.
 The machines will be configured to run on different subnets, an additional machine will act as a router and allow all others to connect to the vm lighthouse simulating the public internet.
 VagrantFiles will be available in the Test section of the various sprints later.
 

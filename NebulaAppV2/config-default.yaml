@@ -20,7 +20,7 @@ listen:
 
 punchy:
   punch: true
-  respond: true
+  respond: false
 
 relay:
   am_relay:

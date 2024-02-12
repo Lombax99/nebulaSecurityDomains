@@ -68,7 +68,19 @@
             }
           },
           {
-            "id": "f1cd2ee81abcbd4f",
+            "id": "3f5dbc6faffbfe81",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Doc/Sprint 3 - Mistrustful colleagues.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c7390e581359abc3",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -79,8 +91,7 @@
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -146,7 +157,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDO.md",
+                "file": "Doc/Nebula first network.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +174,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ToDO.md",
+                "file": "Doc/Nebula first network.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ToDO.md"
+                "file": "Doc/Nebula first network.md"
               }
             }
           },
@@ -215,32 +226,33 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f1cd2ee81abcbd4f",
+  "active": "a5d9e9702f2b9b93",
   "lastOpenFiles": [
-    "Doc/Sprint 2.md",
-    "Doc/Sprint 1.md",
-    "ToDO.md",
-    "example1.json.md",
-    "Doc/Nebula security domains.md",
-    "Doc/Nebula first network.md",
-    "README.md",
-    "Doc/Resources",
-    "readme.txt",
-    "Readme.txt",
-    "Text File.txt",
-    "Doc/Vagrant setup.md",
-    "Doc/Conclusioni.md",
-    "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "Sprint 1.md",
-    "Sprint 2.md",
-    "Sprint 3 - Mistrustful colleagues.md",
-    "Conclusioni.md",
     "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
-    "NebulaAppV2/Test.py",
+    "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
+    "NebulaAppV2/TmpFileGenerated/server2.key",
+    "NebulaAppV2/TmpFileGenerated/server2.crt",
+    "NebulaAppV2/TmpFileGenerated/server1.key",
+    "NebulaAppV2/TmpFileGenerated/server1.crt",
+    "NebulaAppV2/TmpFileGenerated/laptop3.key",
+    "Doc/Sprint 3 - Mistrustful colleagues.md",
+    "ToDO.md",
+    "Doc/Nebula security domains.md",
+    "Doc/Nebula first network.md",
+    "Doc/Sprint 2.md",
+    "Doc/Sprint 1.md",
+    "example1.json.md",
+    "README.md",
+    "Doc/Vagrant setup.md",
+    "Doc/Conclusioni.md",
+    "Sprint 1.md",
+    "Sprint 2.md",
+    "Sprint 3 - Mistrustful colleagues.md",
+    "Conclusioni.md",
     "tmp.md"
   ]
 }
