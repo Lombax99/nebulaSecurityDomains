@@ -99,6 +99,17 @@ Regarding the arrangement of the data in the file, two paths can be followed:
 		- Easier to answer questions such as "which SecDom does this host belong to?"
 Obviously User Friendliness takes precedence over everything else, so the first point is also the best.
 
+The [configuration file](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV2/securityDomains.json) is then defined as follows:
+```JSON
+[
+    {
+        "name": "serverSD",
+        "hosts": ["server1", "server2"]
+    },
+	...
+]
+```
+
 A couple of notes:
 - As defined above the only data that should appear in the file are the IDs of the Hosts and the SecDoms to which they belong, data such as IPs and special parameters aren't needed and should not be part of it.
 - Host IDs and Security Domain names need not to be unique for this project however making them so is not only good practice but would facilitate everything and benefit the end user.
@@ -122,9 +133,104 @@ Using a linux script has several limitations:
 - It's monolithic.
 For the new version we will use a programming language that is deployable on different platforms and organized as much as possible in components.
 My choice falls on Python for ease of use and familiarity.
-### Design
-In this case we need 3 security domains, one for the laptops, one for the servers and one for connecting to the server.
-The configuration file ([[NebulaAppV2/securityDomains.json|securityDomains]]) is defined as follows:
+##### Main
+The main class mirrors the 5-point structure defined earlier to which a number of initial checks on parameters, files, and data are appended.
+Almost all functions are placed in a try-catch construct (not shown here) to handle errors in the provided files. [generateSD.py](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV2/PythonCode/generateSD.py)
+``` python
+def main():
+    #1 checks if files are correct
+    checkParam()
+	
+   #checks if lighthouse is in a SecDom, if it is print a warning
+	if SD.hasLightouse(securityDomainsData):   
+		print("...")
+	
+    #2 key and crt generation for all hosts
+	Gen.generateCrt(hostsSetupData)
+	
+    #3 generation of all config files
+	Gen.generateConf(hostsSetupData)
+	
+	#4 editing of all config files
+	SD.addFirewallRules(securityDomainsData)
+	
+    #5 distribution
+    Dist.sendFiles(sys.argv[1])
+```
+
+NOTE: At this point I end up with two config files, one with the data containing the IP's and data to create the files and one with the security domains, in this case I've also implemented a function to merge the Security Domain data into both files and have both options defined earlier to view the structure of my network. The perfect solution would be to completely abandon the manual generation of these files and switch to a software tool to define the entire network and hide the saved file formats from the end user while allowing them to access, view, and modify the information related to the network structure through the tool.
+##### Data generation
+A library was defined to generate node data.
+Here I'll present only the function responsible of generating the keys and certificates, the rest was not part of the project and can be found [here](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV2/PythonCode/Generation.py).
+```python
+scriptDir = "../scripts/"
+outputDir = "../TmpFileGenerated/"
+configFilePath = "../config-default.yaml"
+
+def generateCrt(hostsSetupData):
+    try:
+        for host in hostsSetupData:
+            if len(host["groups"]) == 0:
+                os.system("./nebula-cert ...")
+            else:
+                os.system("./nebula-cert ...")
+    except:
+        raise Exception("Could not parse Data correctly")
+```
+This function takes an array of dictionary in which a "group" parameter contains all groups a host is part of including all Security Domain. This could be generated from the data of the Security Domains or, like in my case, from another source.
+In my case having already a second configuration file defining all hosts of the network I've preferred to use it after updating it with the data of the Security Domains.
+##### Security Domain logic
+A second library was defined to implement all Security Domain related functions: [SecurityDomain.py](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV2/PythonCode/SecurityDomain.py)
+```python
+def getHostsList(securityDomainsData):
+    try:
+        hostsList = []
+        for SecDom in securityDomainsData:
+            for host in SecDom["hosts"]:
+                if not host in hostsList:
+                    hostsList.append(host)
+        return hostsList
+    except:
+        raise Exception("...")
+
+
+def addFirewallRules(securityDomainsData, hostsList = None):
+    if hostsList == None:                                               
+        hostsList = getHostsList(securityDomainsData)
+		
+    for host in hostsList:
+		...
+		configFile = open(outputDir + "config_" + host + ".yaml")
+		configData = yaml.load(configFile)
+        
+        #save old inbound config and empty it
+        oldConfig = configData["firewall"]["inbound"]
+        configData["firewall"]["inbound"] = []
+		
+        #add rules
+        for SecDom in securityDomainsData:
+            if host in SecDom["hosts"]:
+                configData["firewall"]["inbound"].append(
+                {'port': 'any', 'proto': 'any', 'group': SecDom["name"]}
+                )
+        
+        ...
+		#save previous data if needed
+        if not configData["firewall"]["inbound"]:
+            configData["firewall"]["inbound"] = oldConfig
+		
+        #save data in new file
+        with open(outputDir + "config_" + host + ".yaml", 'w') as f:
+            yaml.dump(configData, f)
+```
+The optional hostList parameter is given because getHostList is not particularly efficient, there could be a better way of creating that list, the option is left to the programmer.
+The list does not need to be limited to only hosts that are part of a Security Domain but only host that are part of a Security Domain as defined in config file will be modified.
+
+If a host is not part of any Security Domain its current configuration should not be overwritten, to achieve this we first save the current inbound configuration and in the end we check if config is still empty, if it is it means the host is not part of any Security Domain and we save the previously saved config.
+#### Test
+In this second version I've run a test composed of 6 machines including 3 laptops in one Security Domain, 2 servers in a different Security Domain, and the lighthouse. Two of the three laptops must be able to connect with only one of the servers.
+It simulates a distributed server in a cluster of machines with one of them acting as a gate for some of the laptops.
+The VagrantFile can be found [here](https://github.com/Lombax99/nebulaProject/blob/main/Vagrant/vagrant_esempio2_nebula/Vagrantfile)
 ```JSON
 [
     {
@@ -144,242 +250,82 @@ The configuration file ([[NebulaAppV2/securityDomains.json|securityDomains]]) is
 ]
 ```
 
-The main class mirrors the 5-point structure defined earlier to which a number of initial checks on parameters, files, and data are appended.
-Almost all functions are placed in a try-catch construct to handle errors in the provided files.
-[[NebulaAppV2/PythonCode/generateSD.py|generateSD.py]]
-``` python
-def main():
-	
-    #1 checks if files are correct
-    checkParam()
-    
-       #load host configuration
-    try:
-        hostsSetupFile = open(sys.argv[1])
-        hostsSetupData = json.load(hostsSetupFile)
-    except:
-        print("...") 
-        exit(1)
-	
-       #load SecDom configuration
-    try:
-        securityDomainsFile = open(sys.argv[2])
-        securityDomainsData = json.load(securityDomainsFile)
-    except:
-        print("...")
-        exit(1)
-	
-       #checks if lighthouse is in a SecDom, if it is print a warning
-    try:
-        if SD.hasLightouse(securityDomainsData):   
-            print("...")
-    except:
-        print("...")   
-        exit(1)
-    
-       #checks for duplicate in name of hosts and in name of SD
-    try:
-        if SD.checkDuplicateSD(securityDomainsData):
-            print("...")
-            exit(1)
-    except:
-        ...
-    
-    try:
-        if checkDuplicateHost(hostsSetupData):
-            print("...")
-            exit(1)
-    except:
-        ...
-	
-	
-    #2 update groups data in host config files with SecDom configuration
-    try:
-        hostsSetupData = SD.merge(hostsSetupData, securityDomainsData)
-        with open(sys.argv[1], 'w') as f:
-            json.dump(hostsSetupData, f, ensure_ascii=False, indent=4)
-    except:
-        ...
-	
-	
-    #3 key and crt generation for all hosts
-    try:
-        Gen.generateCrt(hostsSetupData)
-    except:
-        ...
-	
-	
-    #4 generation and editing of all config files
-    try:
-        Gen.generateConf(hostsSetupData)
-    except:
-	    # can throw an exception if no lightouse is defined in configData
-        print("could not find a lighthouse entry in " + sys.argv[1])
-    try:
-        SD.addFirewallRules(securityDomainsData)
-    except:
-        ...
-	
-	
-    #5 distribution
-    Dist.sendFiles(sys.argv[1])
-```
-
-NOTE: At this point I end up with two config files, one with the data containing the ip's and one with the security domains, in this case I have a way to merge the SecDom data into both files and have both options defined earlier to view the structure of my network. The perfect solution would be to completely abandon the manual generation of these files and switch to a software tool to define the entire network and hide the saved file formats from the end user while allowing them to access, view, and modify the information related to the network structure through the tool.
-
-A library was defined to generate node data: [[NebulaAppV2/PythonCode/Generation.py|Generation.py]]
-```python
-scriptDir = "../scripts/"
-outputDir = "../TmpFileGenerated/"
-configFilePath = "../config-default.yaml"
-
-def generateCrt(hostsSetupData):
-    try:
-        for host in hostsSetupData:
-            if len(host["groups"]) == 0:
-                os.system("./nebula-cert ...")
-            else:
-                os.system("./nebula-cert ...")
-    except:
-        raise Exception("Could not parse Data correctly")
-```
-
-```python
-def generateConf(hostsSetupData):
-    try:
-        lighthouseIP = getLighthouseIP(hostsSetupData)
-    except:
-        raise Exception("No lighthouse found in config file")
-
-    for host in hostsSetupData:
-        #load YAML file
-        yaml=YAML()   # default, if not specfied, is 'rt' (round-trip)
-		...
-		
-        try:
-            configFile = open(configFilePath)
-            configData = yaml.load(configFile)
-        except:
-            print("...") 
-            exit(1)
-
-        #set data as needed
-        if "lighthouse" in host["name"]:  #set lightouse config file
-            lighthouseIP = host["nebula_ip"][:-3]
-            lighthouseMachIP = host["machine_ip"]
-            
-            configData["static_host_map"] = {
-                    DQSS(lighthouseIP): flist([DQSS(lighthouseMachIP + ":4242")])
-                }           #cast to DoubleQuotedScalarString (DQSS) 
-			
-            configData["lighthouse"]["am_lighthouse"] = True
-            configData["lighthouse"]["hosts"] = [DQSS(lighthouseIP)]
-            configData["relay"]["am_relay"] = True
-			...
-            configData["firewall"]["inbound"] = [{'port': 'any', 'proto': 'any', 'host': 'any'}]  #connection with the lightouse is always allowed by default
-
-        else:       #set host config file
-            configData["static_host_map"] = {
-                    DQSS(lighthouseIP): flist([DQSS(lighthouseMachIP + ":4242")])
-                }
-            configData["lighthouse"]["am_lighthouse"] = False
-            configData["lighthouse"]["hosts"] = [DQSS(lighthouseIP)]
-			
-            configData["relay"] = {
-                "relays": [DQSS(lighthouseIP)]
-                }       
-            configData["relay"]["am_relay"] = False    
-            configData["relay"]["use_relays"] = True  
-			 ...
-            configData["firewall"]["inbound"] = []
-            configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'icmp', 'host':'any'})    # ping enabled by default in all the hosts 
-		
-        #save data in new file called config_HOSTNAME.yaml
-        with open(outputDir + "config_" + host["name"] + ".yaml", 'w') as f:
-            yaml.dump(configData, f)
-```
-
-
-A second library was defined to implement all SecDom-related functions: [[NebulaAppV2/PythonCode/SecurityDomain.py|SecurityDomain.py]]
-``` python
-def merge(hostsSetupData, securityDomainsData):
-    try:
-        for host in hostsSetupData:
-            for secDom in securityDomainsData:
-                if secDom["name"] in host["groups"]:                #if the SecDom is in the host group list, we check if it needs to be removed
-                    if not host["name"] in secDom["hosts"]:
-                        host["groups"].remove(secDom["name"])
-                elif host["name"] in secDom["hosts"]:               #SecDom is added only if not already present
-                    host["groups"].append(secDom["name"])
-    except:
-        raise Exception("...")
-    return hostsSetupData
-```
-In the merge we pay attention to add a SecDom only if not already present and to remove SecDom in case they are not needed (for possible changes of a previous configuration)
-
-```python
-def getHostsList(securityDomainsData):
-    try:
-        hostsList = []
-        for SecDom in securityDomainsData:
-            for host in SecDom["hosts"]:
-                if not host in hostsList:
-                    hostsList.append(host)
-        return hostsList
-    except:
-        raise Exception("...")
-
-
-def addFirewallRules(securityDomainsData, hostsList = None):
-    if hostsList == None:                                               
-        try:                                                            
-            hostsList = getHostsList(securityDomainsData)               
-        except:
-            raise Exception("Could not parse Data correctly")
-
-    for host in hostsList:
-        #open file as YAML
-        yaml=YAML()
-        ...
-        try:
-            configFile = open(outputDir + "config_" + host + ".yaml")
-            configData = yaml.load(configFile)
-        except:
-            print("...") 
-            exit(1)
-        
-        #save old inbound config
-        oldConfig = configData["firewall"]["inbound"]                   
-        #reset config                                                   
-        configData["firewall"]["inbound"] = []
-		
-        #add rules
-        for SecDom in securityDomainsData:
-            if host in SecDom["hosts"]:
-                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'any', 'group': SecDom["name"]})
-        
-        ...
-		
-		#save previous data if needed
-        if not configData["firewall"]["inbound"]:
-            configData["firewall"]["inbound"] = oldConfig
-		
-        #save data in new file
-        with open(outputDir + "config_" + host + ".yaml", 'w') as f:
-            yaml.dump(configData, f)
-```
-The optional hostList parameter is given because getHostList is not particularly efficient, there could be a better way of creating that list, the option is left to the programmer.
-The list does not need to be limited to only hosts that are part of a SecDom but only host that are part of a SecDom as defined in config file will be considered obviously.
-
-If a host is not part of any SecDom the current configuration should not be overwritten, to achieve this we first save the current inbound configuration and in the end we check if config is still empty, if it is it means the host is not part of any SecDom and we save the previously saved config.
-#### Test
-In this second version I've runned a test composed of 6 machines including 3 laptops in one SecDom, 2 servers in a different SecDom, and the lighthouse. Two of the three laptops must be able to connect with only one of the servers.
-It simulates a distributed server in a cluster of machines with one of them acting as a gate for some of the laptops.
-The VagrantFile can be found [here](https://github.com/Lombax99/nebulaProject/blob/main/Vagrant/vagrant_esempio2_nebula/Vagrantfile)
-
 ### Edge case - Mistrustful colleagues
+If we slightly modify the previous case by adding the requirement that laptops cannot connect to each other we run in some problems. 
+In this case removing "laptopSD" would not be sufficient, laptop1 and laptop2 would still be able to communicate by both being part of "serverAccessSD".
 
+With the way we have defined Security Domain rules so far we would be forced to define a Security Domain for each laptop that wants to connect with the server in which only the server and the laptop itself are present.
+The solution is not only inconvenient to define but would be extremely unscalable and unmaintainable.
 
+Therefore, we need to extend the system by introducing a new concept: **Roles**.
+I define three possible roles into which a host can fall: **SenderOnly**, **ReceiverOnly**, **Both**.
+##### How are roles implemented
+Roles can be implemented in nebula in the following ways:
+- **SenderOnly**: needs to block the receiving from the Security Domain even though it's part of it, we simply don't add the inbound allow rule.
+- **ReceiverOnly**: should allow to send to everything excluded a specific group, to do that i would need to manually define a rule to let out the connection for every group that this host is part of and it's at least a sender plus the lighthouse (NOTE: this node will not talk to anyone that is not in a Security Domain unless manually configured to do so...)
+- **Both**: as defined in the previous sprint
+From the **ReceiverOnly** we start to see some of the limitation of the Nebula software. In a large network with hundreds of subdomains this quickly turns unmanageable by hand.
+If no role is defined in the config file it is supposed to be a **Both** role.
+##### Redefining outbound rules
+Being a **ReceiverOnly** host in a Security Domain means changing completely the way outbound rules are defined, changing from a default allow to a default deny + other rules.
+To implement this there are two options:
+1) Identify ReceiverOnly in advance and treat them differently
+2) Change the way outbound rules are defined for all the hosts
+In this sprint we will follow the second option. Implementing roles is just an idea and could very well be discarded in the future so there is no reason to make development too complicated.
+#### Test
+In this third case we will have 6 machines including 3 laptops, 2 servers in a SecDom, and the lighthouse. The three laptops must be able to connect with one of the servers but should not be able to connect to each other.
+For a more complete example we will define server1 as a "ReceiverOnly" node and all the laptops as "SenderOnly" nodes.
+The VagrantFile can be found [here](https://github.com/Lombax99/nebulaProject/blob/main/Vagrant/vagrant_esempio3_nebula/Vagrantfile)
+#### Software
+The configuration [file](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV3/securityDomains.json) changes as follows:
+``` JSON
+[
+    {
+        "name": "serverSD",
+        "hosts": [
+            {
+                "name": "server1",
+                "role": ""
+            },
+            {
+                "name": "server2",
+                "role": ""
+            }
+        ]
+    },
+    
+    {
+        "name": "serverAccessSD",
+        "hosts": [
+            {
+                "name": "server1",
+                "role": "receiver"
+            },
+            {
+                "name": "laptop1",
+                "role": "sender"
+            },
+            {
+                "name": "laptop2",
+                "role": "sender"
+            },
+            {
+                "name": "laptop3",
+                "role": "sender"
+            }
+        ]
+    }
+]
+```
+
+Compared to the previous version the main difference is in how the rules are generated:
+Given a host, for each Security Domain we check if it's a **SenderOnly**, **ReceiverOnly**, or **Both**
+- For **SenderOnly** we allow only the ping in inbound and any sending for outbound rules.
+- For **ReceiverOnly** no sendings are allowed in outbound, inbound is the same.
+- For **Both** inbound configuration is the same and outbound is allowed.
+On top of those rules one extra outbound allow is needed to connect to the lighthouse, this is implemented by allowing outbound to a specific host identified with his ca_name.
+A new parameter is then required in the "lighthouse name" for allowing outbound connection to lighthouse, by default is defined as "lighthouse".
+Full script [here](https://github.com/Lombax99/nebulaProject/blob/main/NebulaAppV3/PythonCode/generateSD.py)
 ### References
 - [nebula github](https://github.com/slackhq/nebula)
 - [medium: introducing nebula, the open source global overlay network](https://medium.com/several-people-are-coding/introducing-nebula-the-open-source-global-overlay-network-from-slack-884110a5579)
