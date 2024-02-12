@@ -117,9 +117,10 @@ def main():
     except:
         print("could not find a lighthouse entry in " + sys.argv[1])
     
+    SD.addFirewallRules(securityDomainsData)
     try:
         print("settig SecDom firewall rules")
-        SD.addFirewallRules(securityDomainsData)
+        #SD.addFirewallRules(securityDomainsData)
     except:
         print("Could not parse securityDomains.json correctly")
         print("Usage: generateSD hostSetup.json securityDomains.json")

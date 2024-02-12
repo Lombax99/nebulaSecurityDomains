@@ -50,3 +50,8 @@ firewall:
     udp_timeout: 3m
     default_timeout: 10m
 
+  outbound:
+    - port: any
+      proto: any
+      host: any
+

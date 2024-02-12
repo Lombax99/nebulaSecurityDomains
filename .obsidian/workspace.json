@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Nebula first network.md",
+                "file": "Doc/Nebula first network and useful commands.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/Nebula security domains.md",
+                "file": "Doc/Nebula security domain.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,19 +80,19 @@
             }
           },
           {
-            "id": "c7390e581359abc3",
+            "id": "d0ddc24b2e52a3fc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ToDO.md",
+                "file": "Nebula security domains.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -142,7 +142,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "a71b57dae147cf26",
@@ -158,7 +159,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Sprint 3 - Mistrustful colleagues.md",
+                "file": "Nebula security domains.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +176,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Sprint 3 - Mistrustful colleagues.md",
+                "file": "Nebula security domains.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +199,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Sprint 3 - Mistrustful colleagues.md"
+                "file": "Nebula security domains.md"
               }
             }
           },
@@ -227,28 +228,29 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3f5dbc6faffbfe81",
+  "active": "d0ddc24b2e52a3fc",
   "lastOpenFiles": [
     "Doc/Sprint 2.md",
-    "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "Doc/Nebula security domains.md",
-    "Vagrant/vagrant_esempio3_nebula/Vagrantfile",
-    "Vagrant/vagrant_esempio3_nebula",
-    "Vagrant/vagrant_esempio2_nebula (copy)/Vagrantfile",
-    "Vagrant/vagrant_esempio2_nebula (copy)",
-    "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
     "Doc/Sprint 1.md",
-    "ToDO.md",
-    "Doc/Nebula first network.md",
-    "example1.json.md",
+    "Nebula security domains.md",
+    "Doc/Nebula security domain.md",
+    "Doc/Sprint 3 - Mistrustful colleagues.md",
+    "Doc/Nebula first network and useful commands.md",
+    "NebulaAppV3/TmpFileGenerated/config_server2.yaml",
+    "NebulaAppV3/TmpFileGenerated/config_server1.yaml",
+    "NebulaAppV3/TmpFileGenerated/config_laptop3.yaml",
+    "NebulaAppV3/TmpFileGenerated/config_laptop2.yaml",
+    "NebulaAppV3/TmpFileGenerated/config_laptop1.yaml",
+    "NebulaAppV3/TmpFileGenerated/config_lighthouse.yaml",
+    "NebulaAppV3/TmpFileGenerated/server2.key",
+    "NebulaAppV3/TmpFileGenerated/server2.crt",
+    "NebulaAppV3/TmpFileGenerated/server1.key",
+    "NebulaAppV3/TmpFileGenerated/server1.crt",
     "README.md",
+    "Doc/Other issues.md",
+    "ToDO.md",
+    "example1.json.md",
     "Doc/Vagrant setup.md",
-    "Doc/Conclusioni.md",
     "Sprint 1.md",
     "Sprint 2.md",
     "Sprint 3 - Mistrustful colleagues.md",
