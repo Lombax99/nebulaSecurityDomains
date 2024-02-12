@@ -8,39 +8,26 @@
     {
         "name": "laptop1",
         "nebula_ip": "192.168.100.11/24",
-        "groups": [
-            "serverAccessSD",
-            "laptopSD"
-        ]
+        "groups": []
     },
     {
         "name": "laptop2",
         "nebula_ip": "192.168.100.12/24",
-        "groups": [
-            "serverAccessSD",
-            "laptopSD"
-        ]
+        "groups": []
     },
     {
         "name": "laptop3",
         "nebula_ip": "192.168.100.13/24",
-        "groups": [
-            "laptopSD"
-        ]
+        "groups": []
     },
     {
         "name": "server1",
         "nebula_ip": "192.168.100.21/24",
-        "groups": [
-            "serverSD",
-            "serverAccessSD"
-        ]
+        "groups": []
     },
     {
         "name": "server2",
         "nebula_ip": "192.168.100.22/24",
-        "groups": [
-            "serverSD"
-        ]
+        "groups": []
     }
 ]

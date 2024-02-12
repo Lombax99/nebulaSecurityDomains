@@ -78,7 +78,7 @@ We are simulating a distributed server in a cluster of machines with one of them
 
 ### Design
 In this case we need 3 security domains, one for the laptops, one for the servers and one for connecting to the server.
-The configuration file ([[securityDomains.json]]) is defined as follows:
+The configuration file ([[NebulaAppV2/securityDomains.json|securityDomains]]) is defined as follows:
 ```JSON
 [
     {
@@ -102,6 +102,9 @@ The configuration file ([[securityDomains.json]]) is defined as follows:
 
 
 NOTA4: A questo punto mi ritrovo con due file di config, uno con i dati con gli ip e uno con i security domains, lascio che a livello di codice si gestiscano i conflitti e si assicuri che siano ben formati ma questo porta a nuovi possibili problemi, gli id devono essere corretti nei due file e devono essere definiti tutti, in compenso ho modo di fare merge dei dati delle SecDom in entrambi i file e avere entrambe le opzioni definite sopra per visualizzare la struttura della mia rete. La soluzione perfetta sarebbe abbandonare completamente la generazione manuale di questi file e passare ad un tool software per definire l'intera rete e nascondere i formati dei file salvati allìutente finale permettendogli di accedere e modificare le informazioni legate alla struttura della rete attraverso il tool.
+
+
+
 
 ### PROBLEM CASE: Mistrustful Colleagues
 This new solution is a great advancement compared to the first shell script we had but it's not perfect, in this specific case for example what happens when we decide to have all the laptop able to connect to the server but not to each other? As of right now each and every laptop would need a specific Security Domain with the server.

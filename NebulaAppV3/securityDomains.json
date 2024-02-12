@@ -1,0 +1,37 @@
+[
+    {
+        "name": "serverSD",
+        "hosts": [
+            {
+                "name": "server1",
+                "role": ""
+            },
+            {
+                "name": "server2",
+                "role": ""
+            }
+        ]
+    },
+    
+    {
+        "name": "serverAccessSD",
+        "hosts": [
+            {
+                "name": "server1",
+                "role": "receiver"
+            },
+            {
+                "name": "laptop1",
+                "role": "sender"
+            },
+            {
+                "name": "laptop2",
+                "role": "sender"
+            },
+            {
+                "name": "laptop3",
+                "role": "sender"
+            }
+        ]
+    }
+]

@@ -91,7 +91,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -157,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Nebula first network.md",
+                "file": "Doc/Sprint 3 - Mistrustful colleagues.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -174,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Nebula first network.md",
+                "file": "Doc/Sprint 3 - Mistrustful colleagues.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -197,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Nebula first network.md"
+                "file": "Doc/Sprint 3 - Mistrustful colleagues.md"
               }
             }
           },
@@ -226,25 +227,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a5d9e9702f2b9b93",
+  "active": "3f5dbc6faffbfe81",
   "lastOpenFiles": [
+    "Doc/Sprint 2.md",
+    "Doc/Sprint 3 - Mistrustful colleagues.md",
+    "Doc/Nebula security domains.md",
+    "Vagrant/vagrant_esempio3_nebula/Vagrantfile",
+    "Vagrant/vagrant_esempio3_nebula",
+    "Vagrant/vagrant_esempio2_nebula (copy)/Vagrantfile",
+    "Vagrant/vagrant_esempio2_nebula (copy)",
     "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
     "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
     "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
-    "NebulaAppV2/TmpFileGenerated/server2.key",
-    "NebulaAppV2/TmpFileGenerated/server2.crt",
-    "NebulaAppV2/TmpFileGenerated/server1.key",
-    "NebulaAppV2/TmpFileGenerated/server1.crt",
-    "NebulaAppV2/TmpFileGenerated/laptop3.key",
-    "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "ToDO.md",
-    "Doc/Nebula security domains.md",
-    "Doc/Nebula first network.md",
-    "Doc/Sprint 2.md",
     "Doc/Sprint 1.md",
+    "ToDO.md",
+    "Doc/Nebula first network.md",
     "example1.json.md",
     "README.md",
     "Doc/Vagrant setup.md",

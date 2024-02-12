@@ -5,18 +5,18 @@ from ruamel.yaml import comments
 
 outputDir = "../TmpFileGenerated/"
 
-#IMPORTANTE, il merge deve tenere conto del fatto che potrebbe essere stato fatto un merge in precedenza e non dovrebbero esserci duplicazioni
+
 def merge(hostsSetupData, securityDomainsData):
     try:
         for host in hostsSetupData:
             for secDom in securityDomainsData:
-                if secDom["name"] in host["groups"]:
-                    if not host["name"] in secDom["hosts"]:         #e se devo rimuovere qualcuno da un SecDom? come cambia il file con i grouppi?
+                if secDom["name"] in host["groups"]:                #if the SecDom is in the host group list, we check if it needs to be removed
+                    if not host["name"] in secDom["hosts"]:
                         host["groups"].remove(secDom["name"])
-                elif host["name"] in secDom["hosts"]:
+                elif host["name"] in secDom["hosts"]:               #SecDom is added only if not already present
                     host["groups"].append(secDom["name"])
     except:
-        raise Exception("Date provided can't be parsed correctly")
+        raise Exception("Date provided can't be parsed correctly")  #throws exception if data are not correctly defined
     
     return hostsSetupData
 
@@ -30,30 +30,31 @@ def hasLightouse(securityDomainsData):
                     return True
         return False
     except:
-        raise Exception("Could not parse Data correctly")
+        raise Exception("Could not parse Data correctly")           #throws exception if data are not correctly defined
 
 
-def getHostsList(securityDomainsData):
-    hostsList = []
+def getHostsList(securityDomainsData):                              #return a list of all hosts that are in at least one SecDom
+    try:
+        hostsList = []
+        for SecDom in securityDomainsData:
+            for host in SecDom["hosts"]:
+                if not host in hostsList:
+                    hostsList.append(host)
 
-    for SecDom in securityDomainsData:
-        for host in SecDom["hosts"]:
-            if not host in hostsList:
-                hostsList.append(host)
-
-    #print(hostsList)
-    return hostsList
+        return hostsList
+    except:
+        raise Exception("Could not parse Data correctly")           #throws exception if data are not correctly defined
 
 
 
-def addFirewallRules(securityDomainsData, hostsList = None):
-    
-    if hostsList == None:
-        hostsList = getHostsList(securityDomainsData)
+def addFirewallRules(securityDomainsData, hostsList = None):            #optional hostList parameter, getHostList function is not the best, there could be a better way
+    if hostsList == None:                                               #of creating that list, the option is left to the programmer.
+        try:                                                            #The list does not need to be limited to only hosts that are part of a SecDom
+            hostsList = getHostsList(securityDomainsData)               #Only host that are part of a SecDom as defined in config file will be considered obviously
+        except:
+            raise Exception("Could not parse Data correctly")           #throws exception if data are not correctly defined
 
     for host in hostsList:
-        #print(host)
-
         #open file as YAML
         yaml=YAML()   # default, if not specfied, is 'rt' (round-trip)
         yaml.preserve_quotes = True
@@ -69,32 +70,23 @@ def addFirewallRules(securityDomainsData, hostsList = None):
             exit(1)
         
         #save old inbound config
-        oldConfig = configData["firewall"]["inbound"]
-        #reset config
+        oldConfig = configData["firewall"]["inbound"]                   #if the host is not part of any SecDom the current configuration should not be overwritten
+        #reset config                                                   #we overwrite all files and store the previous config in case the host is not part of any SecDom
         configData["firewall"]["inbound"] = []
-
-
 
         #add rules
         for SecDom in securityDomainsData:
             if host in SecDom["hosts"]:
-                
-                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'any', 'group': SecDom["name"]})    # ping enabled by default in all the hosts 
+                configData["firewall"]["inbound"].append({'port': 'any', 'proto': 'any', 'group': SecDom["name"]})
         
-        #add newline between rules
+        #add newline between set of rules
         CS = comments.CommentedSeq
         configData["firewall"]["inbound"] = CS(configData["firewall"]["inbound"])
         configData["firewall"]["inbound"].yaml_set_comment_before_after_key(1, before='\n')
 
-
-
-
-        #if config is still empty save old config
+        #if config is still empty it means the host is not part of any SecDom and we save the previous config
         if not configData["firewall"]["inbound"]:
             configData["firewall"]["inbound"] = oldConfig
-
-        #yaml.dump(configData, sys.stdout)
-
 
         #save data in new file
         with open(outputDir + "config_" + host + ".yaml", 'w') as f:
@@ -103,13 +95,16 @@ def addFirewallRules(securityDomainsData, hostsList = None):
 
 
 def checkDuplicateSD(securityDomainsData):
-    unique_SecDom = []
-    for SecDom in securityDomainsData:
-        if SecDom["name"] not in unique_SecDom:
-            unique_SecDom.append(SecDom["name"])
-        else:
-            return True
-    return False
+    try:
+        unique_SecDom = []
+        for SecDom in securityDomainsData:
+            if SecDom["name"] not in unique_SecDom:
+                unique_SecDom.append(SecDom["name"])
+            else:
+                return True
+        return 
+    except:
+        raise Exception("Could not parse Data correctly")           #throws exception if data are not correctly defined
 
 
 

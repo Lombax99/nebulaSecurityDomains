@@ -1,6 +1,6 @@
 - [x] Tradurre tutto in inglese
-- [ ] refactor codice python
-- [ ] Finire codice in python
+- [x] refactor codice python
+- [x] Finire codice in python
 - [ ] Finire Progettazione sprint 2
 - [ ] Doc sprint 3
 - [ ] Relazione finale
