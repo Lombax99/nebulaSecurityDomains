@@ -90,9 +90,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "7b98ce7da5038824",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Doc/Other issues.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -159,7 +171,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Final report.md",
+                "file": "Doc/Sprint 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -176,7 +188,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Final report.md",
+                "file": "Doc/Sprint 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -199,7 +211,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Final report.md"
+                "file": "Doc/Sprint 2.md"
               }
             }
           },
@@ -229,27 +241,27 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d0ddc24b2e52a3fc",
+  "active": "2626c735e4b65e48",
   "lastOpenFiles": [
+    "ppt42A7.tmp",
+    "ppt5836.tmp",
+    "ppt42E8.tmp",
+    "Doc/Sprint 1.md",
+    "Doc/Sprint 2.md",
+    "Final report.md",
+    "Doc/Sprint 3 - Mistrustful colleagues.md",
+    "Doc/Other issues.md",
     "Final_report.pdf",
     "FinalReportLatex.zip",
     "Final report.zip",
     "Final report.tex",
     "Final report.pdf",
     "Nebula security domains.pdf",
-    "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "Final report.md",
-    "Doc/Sprint 2.md",
-    "Doc/Sprint 1.md",
     "Doc/Nebula security domain.md",
     "Doc/Nebula first network and useful commands.md",
     "NebulaAppV3/TmpFileGenerated/config_server2.yaml",
     "NebulaAppV3/TmpFileGenerated/config_server1.yaml",
-    "NebulaAppV3/TmpFileGenerated/config_laptop3.yaml",
-    "NebulaAppV3/TmpFileGenerated/config_laptop2.yaml",
-    "NebulaAppV3/TmpFileGenerated/config_laptop1.yaml",
     "README.md",
-    "Doc/Other issues.md",
     "ToDO.md",
     "example1.json.md",
     "Doc/Vagrant setup.md",
