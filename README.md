@@ -1,16 +1,16 @@
 <div align="center"> 
   <h1>Nebula security domains</h1>
   
-Application to implement the concept of **security domains**  in a [Nebula](https://github.com/slackhq/nebula) network. The project had been developed for the course of [Cybersecurity M](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2023/472685) of the University of Bologna.
+Application to implement the concept of _**Security Domain**_  in a [Nebula](https://github.com/slackhq/nebula) network. The project had been developed for the course of [Cybersecurity M](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2023/472685) of the University of Bologna.
 <br/>ATTENTION: This is a proof of concept and should not be treated as a fully working application!
 </div>
 
 ### Security Domain definition
 <div>
-A **security domain** is a set of logically related resources that can communicate and subject to the following constraints:
-<br/>- A resource can have multiple **security domains**
-<br/>- The information related to the **security domain** must be present in the resource's digital certificate
-<br/>- A resource can open a connection only toward another resource that share at least one **security domain** otherwise it is blocked by default
+A _**security domain**_ is a set of logically related resources that can communicate and subject to the following constraints:
+<br/>- A resource can have multiple _**security domains**_
+<br/>- The information related to the _**security domain**_ must be present in the resource's digital certificate
+<br/>- A resource can open a connection only toward another resource that share at least one _**security domain**_ otherwise it is blocked by default
 </div>
 
 ### Resources:
