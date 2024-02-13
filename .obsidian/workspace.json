@@ -85,7 +85,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Nebula security domains.md",
+                "file": "Final report.md",
                 "mode": "source",
                 "source": false
               }
@@ -159,7 +159,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Nebula security domains.md",
+                "file": "Final report.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -176,7 +176,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Nebula security domains.md",
+                "file": "Final report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -199,7 +199,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Nebula security domains.md"
+                "file": "Final report.md"
               }
             }
           },
@@ -216,7 +216,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 475.5
+    "width": 475.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -230,8 +231,14 @@
   },
   "active": "d0ddc24b2e52a3fc",
   "lastOpenFiles": [
+    "Final_report.pdf",
+    "FinalReportLatex.zip",
+    "Final report.zip",
+    "Final report.tex",
+    "Final report.pdf",
+    "Nebula security domains.pdf",
     "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "Nebula security domains.md",
+    "Final report.md",
     "Doc/Sprint 2.md",
     "Doc/Sprint 1.md",
     "Doc/Nebula security domain.md",
@@ -241,11 +248,6 @@
     "NebulaAppV3/TmpFileGenerated/config_laptop3.yaml",
     "NebulaAppV3/TmpFileGenerated/config_laptop2.yaml",
     "NebulaAppV3/TmpFileGenerated/config_laptop1.yaml",
-    "NebulaAppV3/TmpFileGenerated/config_lighthouse.yaml",
-    "NebulaAppV3/TmpFileGenerated/server2.key",
-    "NebulaAppV3/TmpFileGenerated/server2.crt",
-    "NebulaAppV3/TmpFileGenerated/server1.key",
-    "NebulaAppV3/TmpFileGenerated/server1.crt",
     "README.md",
     "Doc/Other issues.md",
     "ToDO.md",
