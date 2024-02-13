@@ -20,5 +20,5 @@ A <b>security domain</b> is a set of logically related resources that can commun
 
 [Nebula doc](https://nebula.defined.net/docs/)
 
-[Nebula official Slack]https://join.slack.com/t/nebulaoss/shared_invite/enQtOTA5MDI4NDg3MTg4LTkwY2EwNTI4NzQyMzc0M2ZlODBjNWI3NTY1MzhiOThiMmZlZjVkMTI0NGY4YTMyNjUwMWEyNzNkZTJmYzQxOGU) (Big thanks to the people on the server for their assistance and availability)
+[Nebula official Slack](https://join.slack.com/t/nebulaoss/shared_invite/enQtOTA5MDI4NDg3MTg4LTkwY2EwNTI4NzQyMzc0M2ZlODBjNWI3NTY1MzhiOThiMmZlZjVkMTI0NGY4YTMyNjUwMWEyNzNkZTJmYzQxOGU) (Big thanks to the people on the server for their assistance and availability)
 </div>
