@@ -15,8 +15,8 @@ A <b>security domain</b> is a set of logically related resources that can commun
 
 ### Resources:
 <div>
-[Nebula github](https://github.com/slackhq/nebula)
 
+[Nebula github](https://github.com/slackhq/nebula)
 
 [Nebula doc](https://nebula.defined.net/docs/)
 
