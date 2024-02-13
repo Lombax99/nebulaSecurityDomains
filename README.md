@@ -18,4 +18,6 @@ A <b>security domain</b> is a set of logically related resources that can commun
 <br/>- <a href="https://github.com/slackhq/nebula">Nebula github</a>
 <br/>- <a href="https://nebula.defined.net/docs/">Nebula doc</a>
 <br/>- <a href="https://join.slack.com/t/nebulaoss/shared_invite/enQtOTA5MDI4NDg3MTg4LTkwY2EwNTI4NzQyMzc0M2ZlODBjNWI3NTY1MzhiOThiMmZlZjVkMTI0NGY4YTMyNjUwMWEyNzNkZTJmYzQxOGU) (Big thanks to the people on the server for their assistance and availability">Nebula official Slack</a>
+
+[Cybersecurity M](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2023/472685)
 </div>
