@@ -19,7 +19,7 @@ listen:
   port: 4242
 
 punchy:
-  punch: true
+  punch: false
   respond: false
 
 relay:
