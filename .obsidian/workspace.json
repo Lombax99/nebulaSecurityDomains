@@ -4,40 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "7fe5564fe7a57c39",
+        "id": "01eefd6afaa09597",
         "type": "tabs",
         "children": [
           {
-            "id": "a5d9e9702f2b9b93",
+            "id": "56788bb2c99fa201",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "Doc/Nebula first network and useful commands.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "127947656371e08c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Doc/Nebula security domain.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e9c8632bcad48225",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "a71b57dae147cf26",
@@ -180,30 +155,31 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a5d9e9702f2b9b93",
+  "active": "56788bb2c99fa201",
   "lastOpenFiles": [
-    "NebulaAppV2/TmpFileGenerated/config_server2.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_server1.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop3.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop2.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_laptop1.yaml",
-    "NebulaAppV2/TmpFileGenerated/config_lighthouse.yaml",
-    "NebulaAppV2/TmpFileGenerated/server2.key",
-    "NebulaAppV2/TmpFileGenerated/server2.crt",
-    "NebulaAppV2/TmpFileGenerated/server1.key",
-    "NebulaAppV2/TmpFileGenerated/server1.crt",
-    "NebulaAppV2/TmpFileGenerated/laptop3.key",
+    "Vagrant/vagrant_esempio2_nebula/config.yaml",
+    "Vagrant/vagrant_esempio2_nebula/ca.crt",
+    "Vagrant/vagrant_esempio2_nebula/host.key",
+    "Vagrant/vagrant_esempio2_nebula/host.crt",
+    "Vagrant/vagrant_esempio2_nebula/setup-host",
+    "Vagrant/vagrant_esempio2_nebula/nebula-cert",
+    "Vagrant/vagrant_esempio2_nebula/nebula",
+    "Vagrant/vagrant_esempio2_nebula/admin1.key",
+    "Vagrant/vagrant_esempio2_nebula/admin1.crt",
     "Doc/Nebula security domain.md",
-    "README.md",
+    "Doc/Other issues.md",
+    "Final report.md",
+    "Doc/Nebula first network and useful commands.md",
+    "lighthouse.png",
+    "ToDO.md",
+    "Doc/Vagrant setup.md",
     "Doc/Sprint 1.md",
     "Doc/Sprint 2.md",
-    "Final report.md",
     "Doc/Sprint 3 - Mistrustful colleagues.md",
-    "Doc/Other issues.md",
-    "Doc/Nebula first network and useful commands.md",
-    "ToDO.md",
+    "NebulaAppV2/scripts/laptop3.key",
+    "NebulaAppV2/scripts/laptop2.key",
+    "README.md",
     "example1.json.md",
-    "Doc/Vagrant setup.md",
     "Sprint 1.md",
     "Sprint 2.md",
     "Sprint 3 - Mistrustful colleagues.md",

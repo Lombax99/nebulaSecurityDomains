@@ -25,6 +25,7 @@ Vagrant.configure("2") do |config|
 	 echo -e "192.168.2.13   laptop3" >> /etc/hosts
 	 echo -e "192.168.3.11   server1" >> /etc/hosts
 	 echo -e "192.168.3.12   server2" >> /etc/hosts
+	 echo -e "192.168.4.11   admin1" >> /etc/hosts
 	 mkdir /etc/nebula
       SHELL
 
@@ -36,6 +37,7 @@ Vagrant.configure("2") do |config|
 	 sudo ip route add 192.168.2.13 via 192.168.1.1
 	 sudo ip route add 192.168.3.11 via 192.168.1.1
 	 sudo ip route add 192.168.3.12 via 192.168.1.1
+	 sudo ip route add 192.168.4.11 via 192.168.1.1
       SHELL
   end
   
@@ -170,11 +172,37 @@ Vagrant.configure("2") do |config|
   end
 
 
+  config.vm.define "admin" do |machine|
+    machine.vm.hostname = "adminMachine"
+    
+    #fixed ssh port for staging inventory
+    machine.vm.network "forwarded_port", id: "ssh", host: 2230, guest: 22
+    machine.vm.network "private_network",
+      virtualbox__intnet: "admin-network",
+      ip: "192.168.4.11",
+      netmask: "255.255.255.0"
+
+    #define route to lighthouse via router
+    machine.vm.provision "shell",
+      inline: <<-SHELL
+	 echo -e "192.168.1.10   lighthouse" >> /etc/hosts
+	 mkdir /etc/nebula
+      SHELL
+
+    machine.vm.provision "shell",
+      run: "always",
+      inline: <<-SHELL
+	 sudo ip route add 192.168.1.10 via 192.168.4.1
+      SHELL
+
+  end
+
+
   config.vm.define "router" do |machine|
     machine.vm.hostname = "router"                                                
                                                                                   
     #fixed ssh port for staging inventory                                         
-    machine.vm.network "forwarded_port", id: "ssh", host: 2230, guest: 22         
+    machine.vm.network "forwarded_port", id: "ssh", host: 2250, guest: 22         
     
    machine.vm.network "private_network",                                         
       virtualbox__intnet: "lighthouse-network",                                       
@@ -191,6 +219,11 @@ Vagrant.configure("2") do |config|
       ip: "192.168.3.1",             
       netmask: "255.255.255.0"                                                   
 
+   machine.vm.network "private_network",       
+      virtualbox__intnet: "admin-network",
+      ip: "192.168.4.1",             
+      netmask: "255.255.255.0"                                                   
+
    #enable forward ip
    machine.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
@@ -200,10 +233,4 @@ Vagrant.configure("2") do |config|
     machine.vm.provision :reload   
                                                                                
   end
-  
-  
-  
-  
-  
-  
 end

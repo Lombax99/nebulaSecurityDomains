@@ -30,7 +30,7 @@ def checkDuplicateHost(hostsSetupData):
                 return True
         return False
     except:
-        raise Exception("Could not parse Data correctly")           #throws exception if data are not correctly defined
+        raise Exception("Could not parse Data correctly, check duplicated host failed")           #throws exception if data are not correctly defined
 
 def main():
 

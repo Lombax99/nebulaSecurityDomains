@@ -8,6 +8,10 @@ outputDir = "../TmpFileGenerated/"
 configFilePath = "../config-default.yaml"
 
 def generateCrt(hostsSetupData):
+    #generate outputDir if it does not exist
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+
     try:
         os.chdir(scriptDir)
         for host in hostsSetupData:
