@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "22b23a3d1dcf14a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Random crypto challenge.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/Nebula first network and useful commands.md",
+                "file": "Random crypto challenge.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/Nebula first network and useful commands.md",
+                "file": "Random crypto challenge.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/Nebula first network and useful commands.md"
+                "file": "Random crypto challenge.md"
               }
             }
           },
@@ -155,8 +168,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "56788bb2c99fa201",
+  "active": "22b23a3d1dcf14a9",
   "lastOpenFiles": [
+    "Doc/Nebula first network and useful commands.md",
+    "Random crypto challenge.md",
     "Vagrant/vagrant_esempio2_nebula/config.yaml",
     "Vagrant/vagrant_esempio2_nebula/ca.crt",
     "Vagrant/vagrant_esempio2_nebula/host.key",
@@ -169,7 +184,6 @@
     "Doc/Nebula security domain.md",
     "Doc/Other issues.md",
     "Final report.md",
-    "Doc/Nebula first network and useful commands.md",
     "lighthouse.png",
     "ToDO.md",
     "Doc/Vagrant setup.md",
@@ -177,7 +191,6 @@
     "Doc/Sprint 2.md",
     "Doc/Sprint 3 - Mistrustful colleagues.md",
     "NebulaAppV2/scripts/laptop3.key",
-    "NebulaAppV2/scripts/laptop2.key",
     "README.md",
     "example1.json.md",
     "Sprint 1.md",
